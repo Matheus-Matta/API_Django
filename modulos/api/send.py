@@ -1,0 +1,118 @@
+import random
+import re
+from datetime import datetime
+from .request import send_message
+from .generator import MessageGenerator 
+from .mail import send_mail
+
+class MessageProcessor:
+
+    def __init__(self, instance):
+        self.instance = instance
+        self.message_generator = MessageGenerator()  # Classe para gerar mensagens
+        self.status_handlers = {
+            'l': self.message_generator.msg_roteiro,
+            't': self.message_generator.msg_entrega,
+            'n': self.message_generator.msg_chave_fiscal,
+            'f': self.message_generator.msg_tentativa,
+            'm': self.message_generator.msg_agendamento,
+            'p': self.message_generator.msg_pedido,
+            'am': self.message_generator.msg_avali_motorista,
+            'at': self.message_generator.msg_avali_montagem,
+            'a': self.message_generator.msg_vinculo,
+        }
+    
+    def send(self, **kwargs):
+        """
+            Processa e envia a mensagem baseada no status.
+
+            kwargs:
+            - number: Número de telefone para o envio da mensagem.
+            - nome: Nome do cliente.
+            - status: Tipo de status que define a mensagem a ser enviada.
+            - desc: descrição do produto
+            - Outros argumentos como 'chaveFiscal', 'montador', 'dataPrevisao', 'motorista' que variam de acordo com o status.
+
+            Returns:
+            - str: A mensagem que foi selecionada para o envio.
+        """
+        try:
+
+            number = kwargs.get("number")
+            nome = kwargs.get("nome")
+            status = kwargs.get("status")
+            email = kwargs.get("email")
+            desc = kwargs.get("desc")
+            codigo = kwargs.get("codigo")
+
+            if not number or not nome or not status or not desc or not codigo:
+                raise ValueError("Campos obrigatórios não foram fornecidos.( number, name, status, desc, codigo )")
+            
+            # Valida o número
+            if not self.is_number_valid(number):
+                raise ValueError("Número inválido. O formato correto é 5521912345678.")
+            
+            # Valida se o status é válido
+            if status.lower() not in self.status_handlers:
+                raise ValueError("Status inválido fornecido.")
+            
+            # Seleciona a função correta para o status
+            msg_function = self.status_handlers[status.lower()]
+
+            if status.lower() == 'n':
+                chave_fiscal = kwargs.get('chaveFiscal')
+                if not chave_fiscal:
+                    raise ValueError("Campo chaveFiscal inválido!")
+                msg = random.choice(msg_function(nome, chave_fiscal))
+            elif status.lower() == 'm' or status.lower() == 'a':
+                montador = kwargs.get('montador')
+                desc = kwargs.get('desc')
+                data_previsao = kwargs.get('dataPrevisao')
+                if not montador or not desc or not data_previsao:
+                    raise ValueError("Campos obrigatórios para o status (m) não foram fornecidos.")
+                data_previsao = self.formatar_data(data_previsao)
+                msg = random.choice(msg_function(nome, desc, montador, data_previsao))
+            elif status.lower() == 'p':
+                desc = kwargs.get('desc')
+                if not desc:
+                    raise ValueError("Campos obrigatórios para o status (p) não foram fornecidos.")
+                msg = random.choice(msg_function(nome, desc, 'meu_link_nao_esta_pronto'))
+            elif status.lower() == 'am':
+                desc = kwargs.get('desc')
+                motorista =  kwargs.get('motorista')
+                if not desc or not motorista:
+                    raise ValueError("Campos obrigatórios para o status (am) não foram fornecidos.")
+                msg = random.choice(msg_function(nome, motorista, desc, 'meu_link_nao_esta_pronto'))
+            elif status.lower() == 'at':
+                desc = kwargs.get('desc')
+                montador =  kwargs.get('montador')
+                if not desc or not montador:
+                    raise ValueError("Campos obrigatórios para o status (at) não foram fornecidos.")
+                msg = random.choice(msg_function(nome, montador, desc, 'meu_link_nao_esta_pronto'))
+            else:
+                # Para os outros status ('l', 't', 'f'), não há parâmetros extras
+                msg = random.choice(msg_function(nome))
+
+            # envio de emails
+            if email:
+                send_mail(nome, desc, email, msg, codigo, 'https://google.com')
+            # Envio da mensagem usando a função send_message de forma assíncrona
+            task = send_message.apply_async((self.instance, msg, number), queue='messages')
+            # Retorna o ID da tarefa enfileirada
+            # return {'task_id': task.id} # Retornar o ID da tarefa Celery
+            return  f'OK'  
+        except Exception as e:
+            print(f"error interno no send function { str(e)}")
+            raise ValueError(f"ops... houve um error interno { str(e)}")
+
+
+    # Função para validar número
+    @staticmethod
+    def is_number_valid(number):
+        return bool(re.match(r"^55\d{11}$", number))
+    
+    # função para formata data para dia/mes
+    @staticmethod
+    def formatar_data(self, data):
+            date_obj = datetime.strptime(data, '%Y-%m-%d')
+            return date_obj.strftime('%d/%m')

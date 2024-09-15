@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atualização de Pedido</title>
+    <style>
+        body {
+            background-color: #ffffff;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            z-index: 10;
+            max-width: 600px;
+            margin: 20px auto;
+            margin-top: -3%;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header, .footer {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo {
+            width: 120px;
+        }
+        .links {
+            color: #3db6fc;
+            text-decoration: none;
+        }
+        h4 {
+            text-align: center;
+            color: #333;
+        }
+        p {
+            text-align: center;
+            color: #333;
+        }
+        .alert {
+            margin: 0 auto;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .details{
+            width: 100%;
+        }
+        .details .header_details{
+            background-color: #f5f7f9;
+            padding: 15px 10px;
+            border-radius: 10px 10px 0 0;
+            color: #656a7c;
+            font-size: 14px;
+            font-weight: 600;
+            font-size: 1vw;
+            width: 15vw;
+            
+        }
+        .details .body_details{
+            background-color: #f5f7f9;
+            padding: 15px 8px;
+            border-radius: 0 10px 10px 10px;
+        }
+        .details .item_details{
+            padding: 10px;
+            background-color: #ffffff;
+            color: #656a7c;
+            border-radius: 5px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #e63846;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background-color:  #e63846;
+        }
+        .social-icons img {
+            width: 24px;
+            margin: 0 10px;
+        }
+        .text-muted {
+            color: #777;
+            font-size: 12px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header com logo e link de visualização no navegador -->
+        <div class="header">
+            <img src="https://i.imgur.com/okaN1af.jpg" alt="Logo" class="logo">
+            <p style="margin: 0; font-style: italic;">Visite nosso site:</p>
+            <div>
+                <a href="https://maxxxmoveis.com.br/" class="links">maxxxmoveis.com.br</a>
+            </div>
+        </div>
+
+        <!-- Corpo principal do email -->
+        <h4 style="font-size: 32px; color: #e63846; margin: 2px;">Olá, {{ nome }}!</h4>
+        <p>Seu pedido de número <b>{{ codigo }}</b> do produto <b>{{ produto }}</b> foi atualizado.</p>
+
+        <!-- Detalhes do pedido -->
+        <div class="alert">
+            <div class="details">
+                <div style="display: block;" class="header_details">
+                    Detalhes do pedido
+                </div>
+                <div class="body_details">
+                    <div class="item_details">
+                        {{ msg }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ação principal -->
+        <div style="text-align: center; margin: 30px 0; ">
+            <a href="{{ link }}" style="text-decoration: none; color: white;" class="btn">Acompanhar Pedido</a>
+        </div>
+
+        <!-- Informação adicional -->
+        <div style="text-align: center; margin-top: 20px;">
+            <p class="text-muted">Em caso de dúvidas, entre em contato com nosso atendimento</p>
+            <a href="https://w.app/3Z10ap" class="links">Whastapp (21) 99565-9546</a>.
+            <a href="mailto:sac@maxxxmoveis.com.br?subject=Olá, quero ajuda com meu produto. codigo {{ codigo }}" class="links">sac@maxxxmoveis.com.br</a>
+        </div>
+
+        <!-- Footer com redes sociais -->
+        <div class="footer">
+            <h6 style="margin: 5px;">Siga-nos nas redes sociais:</h6>
+            <div style="margin-bottom: 5px;" class="text-light" class="social-icons">
+                <a href="https://www.instagram.com/maxmoveis_oficial/">
+                    <img style="width: 24px;" src="https://i.imgur.com/KdNJxUd.png" alt="instagram">
+                </a>
+            </div>
+
+            <!-- Informações de contato -->
+            <div class="text-muted">
+                &copy; 2024 Maxxx Móveis - Todos os direitos reservados<br>
+                Endereço: Rua Prefeito Gilberto Antunes SN QD 1 LT 1, marambaia, são gonçalo, RJ
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
