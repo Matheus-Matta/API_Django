@@ -5,11 +5,9 @@ from django.core.mail import BadHeaderError
 from smtplib import SMTPException 
 from django.core.validators import validate_email
 
-def send_mail(nome, produto, email, msg, codigo, link = None):
-
+def send_mail(nome, produto, email, msg, codigo, tracking_link = None, avaliacao_link = None):
     # Assunto do email
     try:
-        print(email)
         validate_email(email)
         
         subject = 'Detalhes do seu pedido'
@@ -19,7 +17,8 @@ def send_mail(nome, produto, email, msg, codigo, link = None):
             'nome': nome,
             'produto': produto,
             'email': email,
-            'link': link,
+            'tracking_link': tracking_link,
+            'avaliacao_link': avaliacao_link,
             'msg': msg,
             'codigo': codigo
         })

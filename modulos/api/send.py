@@ -1,9 +1,14 @@
 import random
 import re
+import requests
 from datetime import datetime
 from .request import send_message
-from .generator import MessageGenerator 
+from .generator import MessageGenerator, MessageGenerator_unique
 from .mail import send_mail
+from .encrypt import cryp_encode
+from decouple import config
+from .db_manage import PedidoManager
+from .encurtador import encurtar_url_tinyurl
 
 class MessageProcessor:
 
@@ -23,21 +28,7 @@ class MessageProcessor:
         }
     
     def send(self, **kwargs):
-        """
-            Processa e envia a mensagem baseada no status.
-
-            kwargs:
-            - number: Número de telefone para o envio da mensagem.
-            - nome: Nome do cliente.
-            - status: Tipo de status que define a mensagem a ser enviada.
-            - desc: descrição do produto
-            - Outros argumentos como 'chaveFiscal', 'montador', 'dataPrevisao', 'motorista' que variam de acordo com o status.
-
-            Returns:
-            - str: A mensagem que foi selecionada para o envio.
-        """
         try:
-
             number = kwargs.get("number")
             nome = kwargs.get("nome")
             status = kwargs.get("status")
@@ -47,18 +38,38 @@ class MessageProcessor:
 
             if not number or not nome or not status or not desc or not codigo:
                 raise ValueError("Campos obrigatórios não foram fornecidos.( number, name, status, desc, codigo )")
-            
+
             # Valida o número
             if not self.is_number_valid(number):
                 raise ValueError("Número inválido. O formato correto é 5521912345678.")
-            
+
             # Valida se o status é válido
             if status.lower() not in self.status_handlers:
                 raise ValueError("Status inválido fornecido.")
-            
+
             # Seleciona a função correta para o status
             msg_function = self.status_handlers[status.lower()]
 
+            msg_unique = MessageGenerator_unique(**kwargs)  # Gera msg para tracking e email
+
+            # Cria ou busca o pedido com base no código e número
+            pedido = PedidoManager(**kwargs)
+
+            # Gera a criptografia para a URL da avaliação e do rastreamento
+            cryp = cryp_encode(**kwargs)
+
+            tracking_link = f'{config("DOMAIN")}/api/tracking/{pedido.get_tracking()}' if pedido.get_tracking() else None
+            avalicao_link = f'{config("DOMAIN")}/api/avaliacao/{cryp}' if status.lower() in ['at', 'am'] else None
+           
+
+            # Atualiza kwargs com os links
+            kwargs['tracking_link'] = tracking_link
+            if status.lower() in ['at', 'am']:
+                kwargs['avalicao_link'] = encurtar_url_tinyurl(avalicao_link)
+
+            pedido.update_status(status.lower(), msg_unique, avalicao_link) 
+
+            # Gerar a mensagem
             if status.lower() == 'n':
                 chave_fiscal = kwargs.get('chaveFiscal')
                 if not chave_fiscal:
@@ -76,34 +87,40 @@ class MessageProcessor:
                 desc = kwargs.get('desc')
                 if not desc:
                     raise ValueError("Campos obrigatórios para o status (p) não foram fornecidos.")
-                msg = random.choice(msg_function(nome, desc, 'meu_link_nao_esta_pronto'))
+                msg = random.choice(msg_function(nome, desc, kwargs['tracking_link']))
             elif status.lower() == 'am':
                 desc = kwargs.get('desc')
-                motorista =  kwargs.get('motorista')
+                motorista = kwargs.get('motorista')
                 if not desc or not motorista:
                     raise ValueError("Campos obrigatórios para o status (am) não foram fornecidos.")
-                msg = random.choice(msg_function(nome, motorista, desc, 'meu_link_nao_esta_pronto'))
+                msg = random.choice(msg_function(nome, motorista, desc, kwargs['avalicao_link']))
             elif status.lower() == 'at':
                 desc = kwargs.get('desc')
-                montador =  kwargs.get('montador')
+                montador = kwargs.get('montador')
                 if not desc or not montador:
                     raise ValueError("Campos obrigatórios para o status (at) não foram fornecidos.")
-                msg = random.choice(msg_function(nome, montador, desc, 'meu_link_nao_esta_pronto'))
+                msg = random.choice(msg_function(nome, montador, desc, kwargs['avalicao_link']))
             else:
                 # Para os outros status ('l', 't', 'f'), não há parâmetros extras
                 msg = random.choice(msg_function(nome))
 
-            # envio de emails
+            # Atualiza o status com a nova mensagem
+
+            # Envio de emails
             if email:
-                send_mail(nome, desc, email, msg, codigo, 'https://google.com')
+                if status.lower() in ['at', 'am']:
+                    send_mail(nome, desc, email, msg_unique, codigo, kwargs['tracking_link'], kwargs['avalicao_link'])
+                else:
+                    send_mail(nome, desc, email, msg_unique, codigo, kwargs['tracking_link'])
+
             # Envio da mensagem usando a função send_message de forma assíncrona
             task = send_message.apply_async((self.instance, msg, number), queue='messages')
-            # Retorna o ID da tarefa enfileirada
-            # return {'task_id': task.id} # Retornar o ID da tarefa Celery
-            return  f'OK'  
+
+            return 'OK'
         except Exception as e:
-            print(f"error interno no send function { str(e)}")
-            raise ValueError(f"ops... houve um error interno { str(e)}")
+            print(f"error interno no send function {str(e)}")
+            raise ValueError(f"ops... houve um error interno {str(e)}")
+
 
 
     # Função para validar número
@@ -113,6 +130,6 @@ class MessageProcessor:
     
     # função para formata data para dia/mes
     @staticmethod
-    def formatar_data(self, data):
+    def formatar_data(data):
             date_obj = datetime.strptime(data, '%Y-%m-%d')
             return date_obj.strftime('%d/%m')

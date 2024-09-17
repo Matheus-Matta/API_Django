@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rastreamento de Pedido</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <style>
+         .header{
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header img{
+            width: 100px;
+        }
+        .tracking-detail {
+            padding:3rem 0
+        }
+        #tracking {
+            margin-bottom:1rem
+        }
+        [class*=tracking-status-] p {
+            margin:0;
+            font-size:1.1rem;
+            color:#fff;
+            text-transform:uppercase;
+            text-align:center
+        }
+        [class*=tracking-status-] {
+            padding:0.8rem 0
+        }
+        .tracking-status-intransit {
+            background-color: #e63846;
+            border-radius: 10px 10px 0 0;
+        }
+        .tracking-status-outfordelivery {
+            background-color:#f5a551
+        }
+        .tracking-status-deliveryoffice {
+            background-color:#f7dc6f
+        }
+        .tracking-status-delivered {
+            background-color:#4cbb87
+        }
+        .tracking-status-attemptfail {
+            background-color:#b789c7
+        }
+        .tracking-status-error,.tracking-status-exception {
+            background-color:#d26759
+        }
+        .tracking-status-expired {
+            background-color:#616e7d
+        }
+        .tracking-status-pending {
+            background-color:#ccc
+        }
+        .tracking-status-inforeceived {
+            background-color:#214977
+        }
+        .tracking-list {
+            border:1px solid #e5e5e5
+        }
+        .tracking-item {
+            border-left:1px solid #e5e5e5;
+            position:relative;
+            padding:2rem 1.5rem .5rem 2.5rem;
+            font-size:.9rem;
+            margin-left:3rem;
+            min-height:5rem;
+            display: flex;
+            align-items: center;
+        }
+        .tracking-item:last-child {
+            padding-bottom:2rem;
+        }
+        .tracking-item:first-child {
+            background-color: #00a2ff18;
+        }
+        .tracking-item .tracking-date {
+            margin-bottom:.5rem
+        }
+        .tracking-item .tracking-date span {
+            color:#888;
+            font-size:85%;
+            padding-left:.4rem
+        }
+        .tracking-item .tracking-content .tracking-message{
+            font-size: 16px;
+            font-family: sans-serif;
+        }
+        .tracking-item .tracking-content {
+            padding:.5rem .8rem;
+            background-color:#f4f4f4;
+            border-radius:.5rem
+        }
+        .tracking-item .tracking-content span {
+            display:block;
+            color:#888;
+            font-size:85%
+        }
+        .tracking-item .tracking-icon {
+            line-height:2.6rem;
+            position:absolute;
+            left:-1.3rem;
+            width:2.6rem;
+            height:2.6rem;
+            text-align:center;
+            border-radius:50%;
+            font-size:1.1rem;
+            background-color: #fff;
+            border: 1px solid #e4e4e4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .tracking-item .tracking-icon i{
+            transform: scale(1.2);
+        }
+        @media(min-width:992px) {
+            .tracking-item {
+            margin-left:10rem
+        }
+        .tracking-item .tracking-date {
+            position:absolute;
+            left:-10rem;
+            width:7.5rem;
+            text-align:right
+        }
+        .tracking-item .tracking-date span {
+            display:block
+        }
+        .tracking-item .tracking-content {
+            padding:0;
+            background-color:transparent
+        }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="header">
+        <img src="https://i.imgur.com/okaN1af.jpg" alt="Logo" class="logo">
+        <p style="margin: 0; font-style: italic;">Visite nosso site:</p>
+        <div>
+            <a href="https://maxxxmoveis.com.br/" class="links">maxxxmoveis.com.br</a>
+        </div>
+    </div>
+    <h6 class="text-center">Rastreamento do Pedido: {{ pedido.codigo }}</h6>
+    <p style="color: #616e7d; font-weight: 600;" class="text-center">{{ pedido.desc }}</p>
+
+    <div id="tracking">
+        <div class="text-center tracking-status-intransit">
+            <p class="tracking-status text-tight">Detalhes do pedido</p>
+        </div>
+        <ul class="tracking-list">
+            {% for prog in progresso %}
+                <li class="tracking-item">
+                    <div class="tracking-icon tracking-icon">
+                        {% if prog.status == 'am' or prog.status == 'at' %}
+                        <i style="color: #ffc107;" class="bi bi-star-fill"></i>
+                        {% elif prog.status == 'p' %}
+                        <i style="color: #e63846;" class="bi bi-cart-check-fill"></i>
+                        {% elif prog.status == 'l' %}
+                        <i style="color: #d26759;" class="bi bi-box2-fill"></i>
+                        {% elif prog.status == 't' %}
+                        <i style="color: #4cbb87" class="bi bi-truck"></i>
+                        {% elif prog.status == 'f' %}
+                        <i style="color: #d80012" class="bi bi-person-x-fill"></i>
+                        {% elif prog.status == 'n' %}
+                        <i style="color: #266dbe" class="bi bi-key-fill"></i>
+                        {% elif prog.status == 'm' %}
+                        <i style="color: #b789c7" class="bi bi-calendar2-check-fill"></i>
+                        {% elif prog.status == 'a' %}
+                        <i style="color: #c93df3" class="bi bi-calendar-plus-fill"></i>
+                        {% endif %}
+                    </div>
+                
+                    <div class="tracking-content">
+                        <div class="tracking-date">{{ prog.data_criacao|date:"d/m/Y" }} <span>{{ prog.data_criacao|time:"H:i" }}</span></div>
+                        <div class="tracking-message" style="color: #616e7d;"><strong>{{ prog.mensagem }}</strong></div>
+                        
+                        <!-- Corrected condition for showing the evaluation button -->
+                        {% if prog.status == 'am' or prog.status == 'at' and prog.url %}
+                            {% if  prog.url %}
+                                <a href="{{ prog.url }}" class="btn btn-primary mt-2">Clique aqui para Avaliar</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+<div class="mt-4 mb-4 text-center">
+    <p class="text-muted">Em caso de dúvidas, entre em contato com nosso atendimento</p>
+    <a href="https://w.app/3Z10ap" class="links">Whastapp (21) 99565-9546</a><br>
+    <a href="mailto:sac@maxxxmoveis.com.br?subject=Olá, quero ajuda com meu produto. codigo {{ codigo }}" class="links">sac@maxxxmoveis.com.br</a>
+</div>
+
+<!-- Footer com redes sociais -->
+<div class="footer text-center mb-2">
+    <h6 style="margin: 5px;">Siga-nos nas redes sociais:</h6>
+    <div style="margin-bottom: 5px;" class="text-light" class="social-icons">
+        <a href="https://www.instagram.com/maxmoveis_oficial/">
+            <img style="width: 24px;" src="https://i.imgur.com/KdNJxUd.png" alt="instagram">
+        </a>
+    </div>
+
+    <!-- Informações de contato -->
+    <div class="text-muted">
+        &copy; 2024 Maxxx Móveis - Todos os direitos reservados<br>
+        Endereço: Rua Prefeito Gilberto Antunes SN QD 1 LT 1, marambaia, são gonçalo, RJ
+    </div>
+</div>
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

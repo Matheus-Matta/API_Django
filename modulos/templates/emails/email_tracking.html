@@ -51,20 +51,16 @@
             width: 100%;
         }
         .details .header_details{
-            background-color: #f5f7f9;
             padding: 15px 10px;
-            border-radius: 10px 10px 0 0;
             color: #656a7c;
             font-size: 14px;
             font-weight: 600;
             font-size: 1vw;
-            width: 15vw;
-            
         }
         .details .body_details{
             background-color: #f5f7f9;
             padding: 15px 8px;
-            border-radius: 0 10px 10px 10px;
+            border-radius: 10px;
         }
         .details .item_details{
             padding: 10px;
@@ -81,6 +77,7 @@
             border-radius: 8px;
             text-decoration: none;
             font-size: 16px;
+            width: 180px;
         }
         .btn:hover {
             background-color:  #e63846;
@@ -119,7 +116,7 @@
         <!-- Detalhes do pedido -->
         <div class="alert">
             <div class="details">
-                <div style="display: block;" class="header_details">
+                <div style="display: block; text-wrap: nowrap;" class="header_details">
                     Detalhes do pedido
                 </div>
                 <div class="body_details">
@@ -131,8 +128,13 @@
         </div>
 
         <!-- Ação principal -->
+        {% if avaliacao_link %}
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="{{ avaliacao_link }}" style="text-decoration: none; color: white; background-color: #004aac;" class="btn">clique aqui para avaliar</a>
+        </div>
+        {% endif %}
         <div style="text-align: center; margin: 30px 0; ">
-            <a href="{{ link }}" style="text-decoration: none; color: white;" class="btn">Acompanhar Pedido</a>
+            <a href="{{ tracking_link }}" style="text-decoration: none; color: white;" class="btn">Acompanhar Pedido</a>
         </div>
 
         <!-- Informação adicional -->

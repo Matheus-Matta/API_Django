@@ -6,8 +6,8 @@ import random
 
 @shared_task(rate_limit='1/m')
 def send_message(instance, message, number):
-    #sleep = random.randint(int(config('MESSAGE_TIMEOUT_START')), int(config('MESSAGE_TIMEOUT_END')))
-    #time.sleep(sleep)
+    sleep = random.randint(int(config('MESSAGE_TIMEOUT_START')), int(config('MESSAGE_TIMEOUT_END')))
+    time.sleep(sleep)
     """
     Envia uma mensagem usando uma API de mensagens.
 

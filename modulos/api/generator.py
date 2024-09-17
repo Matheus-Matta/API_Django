@@ -92,3 +92,42 @@ class MessageGenerator:
     
     
 
+
+
+def MessageGenerator_unique(**kwargs):
+    status = kwargs.get('status')
+    if not status:
+        raise ValueError("O status não foi fornecido no kwargs para o MessageGenerator_unique.")
+    match status:
+        case 'l':
+            return "Seu pedido está em fase de roteirização e está programado para ser enviado amanhã."
+        case 't':
+            return "Seu pedido está em trânsito e será entregue em breve."
+        case 'n':
+            chave_fiscal = kwargs.get('chave_fiscal')
+            if not chave_fiscal:
+                raise ValueError("A chave fiscal não foi fornecida para o status 'n' do MessageGenerator_unique.")
+            return f"A nota fiscal do seu pedido foi emitida com sucesso. A chave fiscal é {chave_fiscal}."
+        case 'f':
+            return "Tentamos realizar a entrega do seu pedido, mas infelizmente não obtivemos sucesso."
+        case 'm':
+            montador = kwargs.get('montador')
+            data_previsao = kwargs.get('dataPrevisao')
+            if not montador or not data_previsao:
+                raise ValueError("O montador ou a data de previsão não foram fornecidos para o status 'm' do MessageGenerator_unique.")
+            return f"A montagem do seu produto está agendada. Montador: {montador}, Data prevista: {data_previsao}."
+        case 'a':
+            montador = kwargs.get('montador')
+            if not montador:
+                raise ValueError("O montador não foi fornecido para o status 'a' do MessageGenerator_unique.")
+            return f"O montador {montador} foi designado para o seu pedido e em breve entrará em contato."
+        case 'p':
+            return "Seu pedido foi realizado com sucesso. Agradecemos por escolher a Maxxx Móveis!"
+        case 'am':
+            return f"Entrega concluída com sucesso! Por favor, avalie o motorista que realizou a entrega através do botao abaixo:"
+        case 'at':
+            return f"A montagem do seu produto foi concluída. A sua opinião é muito importante para nós! Avalie o montador através do botao abaixo:"
+        case _:
+            raise ValueError("Status desconhecido.")
+
+    
