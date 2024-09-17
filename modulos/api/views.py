@@ -15,7 +15,7 @@ import json
 from .db_manage import PedidoManager
 
 def index(request):
-    #return  HttpResponse(f"<h1 style='color: green'> Essa api está Online! </h1>")
+    return  HttpResponse(f"Essa api está Online!")
     """
     View que simula o envio de uma mensagem para a API `send_msg` usando a biblioteca requests.
     """
