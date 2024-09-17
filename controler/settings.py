@@ -77,12 +77,12 @@ WSGI_APPLICATION = 'controler.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
 
 
 # Password validation
@@ -170,3 +170,19 @@ USE_L10N = True
 USE_TZ = True
 DATE_FORMAT = 'd/m/Y'
 DATETIME_FORMAT = 'd/m/Y H:i:s'
+
+
+
+# Database
+# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DATABASE_NAME'),
+        'USER': config('DATABASE_USER'),
+        'PASSWORD': config('DATABASE_PASSWORD'),
+        'HOST': config('DATABASE_HOST'),  # Nome do container ou endereço IP do banco de dados
+        'PORT': config('DATABASE_PORT', '5432'),  # Porta padrão do PostgreSQL
+    }
+}

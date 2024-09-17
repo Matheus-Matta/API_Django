@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:3344
+    volumes:
+      - .:/app
+    ports:
+      - "3344:3344"
+    env_file:
+      - .env
+    networks:
+      - minha_rede
+    depends_on:
+      - celery
+
+  celery:
+    build: .
+    command: version: '3.8'
+
+  celery:
+    build: .
+    command: celery -A controler worker -l INFO
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    networks:
+      - minha_rede
+
+volumes:
+  postgres_data:
+
+networks:
+  minha_rede:
+    external: true
+
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    networks:
+      - minha_rede
+
+volumes:
+  postgres_data:
+
+networks:
+  minha_rede:
+    external: true

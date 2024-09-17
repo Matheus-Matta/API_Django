@@ -38,18 +38,13 @@ class PedidoManager:
         Se não, adiciona-os ao progresso do pedido.
         """
         try:
-            # Verifica se o status já existe no progresso do pedido
-            progresso_existente = Progresso.objects.filter(pedido=self.pedido, status=status).exists()
-
-            if not progresso_existente:
-                # Se não existir, cria um novo registro de progresso
-                progresso = Progresso.objects.create(
-                    pedido=self.pedido,
-                    status=status,
-                    mensagem=mensagem,
-                    url=url
-                )
-                return progresso
+            progresso = Progresso.objects.create(
+                pedido=self.pedido,
+                status=status,
+                mensagem=mensagem,
+                url=url
+            )
+            return progresso
         except Exception as e:
             raise ValueError(f"Erro ao adicionar status e mensagem: {str(e)}")
         
