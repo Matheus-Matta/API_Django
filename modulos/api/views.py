@@ -63,8 +63,8 @@ def send_msg(request):
 
         # Instanciar o MessageProcessor
         instance = {
-            'name': 'Maxxx-dp1',
-            'token': 'xq2yrgebvounsyyrukq6'
+            'name': config('INSTANCE_NAME'),
+            'token': config("INSTANCE_TOKEN")
         }
         processor = MessageProcessor(instance)  # Agora você só passa a instância
 
