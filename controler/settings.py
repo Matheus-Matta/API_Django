@@ -27,7 +27,8 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['maxxxmoveis.star.dev.br', 'localhost', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://maxxxmoveis.star.dev.br']
 
 
 # Application definition
@@ -77,12 +78,12 @@ WSGI_APPLICATION = 'controler.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': BASE_DIR / 'db.sqlite3',
-#    }
-#}
+DATABASES = {
+  'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+       'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Password validation
@@ -156,9 +157,7 @@ DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")   # Endereço de email padrão
 STATIC_URL = '/static/'
 
 # Diretório onde o Django vai buscar os arquivos estáticos
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+STATICFILES_DIRS = [BASE_DIR / "static"] 
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
@@ -176,7 +175,7 @@ DATETIME_FORMAT = 'd/m/Y H:i:s'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
+DATABASES_example = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': config('DATABASE_NAME'),

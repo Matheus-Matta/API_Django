@@ -15,13 +15,13 @@ import json
 from .db_manage import PedidoManager
 
 def index(request):
-    return  HttpResponse(f"Essa api está Online!")
+    #return  HttpResponse(f"Essa api está Online!")
     """
     View que simula o envio de uma mensagem para a API `send_msg` usando a biblioteca requests.
     """
     try:
         # URL da API para onde vamos enviar os dados
-        api_url = 'http://127.0.0.1:8000/api/sendMsg'  # Substitua pelo endpoint correto, se necessário
+        api_url = 'https://maxxxmoveis.star.dev.br/api/sendMsg'  # Substitua pelo endpoint correto, se necessário
 
         # Dados simulados para o envio de mensagem
         data = {
