@@ -27,8 +27,8 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['maxxxmoveis.star.dev.br', 'localhost', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ['https://maxxxmoveis.star.dev.br']
+ALLOWED_HOSTS = [config("DOMAIN"), 'localhost', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = [config("DOMAIN"), 'localhost', '127.0.0.1']
 
 
 # Application definition

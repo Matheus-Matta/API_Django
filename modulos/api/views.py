@@ -15,41 +15,7 @@ import json
 from .db_manage import PedidoManager
 
 def index(request):
-    #return  HttpResponse(f"Essa api está Online!")
-    """
-    View que simula o envio de uma mensagem para a API `send_msg` usando a biblioteca requests.
-    """
-    try:
-        # URL da API para onde vamos enviar os dados
-        api_url = 'https://maxxxmoveis.star.dev.br/api/sendMsg'  # Substitua pelo endpoint correto, se necessário
-
-        # Dados simulados para o envio de mensagem
-        data = {
-            "number": "5521981345727",
-            "nome": "matheus",
-            "status": "at",  # Pode ser 'l', 't', 'n', etc.
-            "chaveFiscal": "12345678901234",
-            "montador": "alberto",
-            "desc": "Mesa",
-            "dataPrevisao": "2024-09-15",
-            'email': 'matheuseduardo3004@gmail.com',
-            'codigo': 101010
-        }
-
-        headers = {
-            'token': config("TOKEN") # Substitua pelo token correto
-        }
-        # Fazendo a requisição POST para a API send_msg
-        response = requests.post(api_url, json=data,headers=headers)
-
-        # Processa a resposta da API
-        if response.status_code == 201:
-            return HttpResponse(f"Simulação de envio bem-sucedida! Resposta: {response.json()}")
-        else:
-            return HttpResponse(f"Falha ao enviar mensagem. Status: {response.status_code}, Resposta: {response.text}")
-
-    except Exception as e:
-        return HttpResponse(f"Erro durante a simulação: {str(e)}")
+    return  HttpResponse(f"Essa api está Online!")
 
 def doc(request):
     return render(request, 'doc/doc.html') 
