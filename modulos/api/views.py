@@ -16,7 +16,7 @@ from .db_manage import PedidoManager
 
 def index(request):
     return  HttpResponse(f"Essa api está Online!")
-
+    
 def doc(request):
     return render(request, 'doc/doc.html') 
 

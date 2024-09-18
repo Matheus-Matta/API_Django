@@ -45,6 +45,7 @@
                             <li><code>nome</code> (obrigatório): Nome do cliente.</li>
                             <li><code>email</code> Obrigatorio para envio de emails para o cliente, mas caso não seja fornecido o envio de mensagem ainda funciona.</li>
                             <li><code>desc</code> (obrigatório) Descrição do produto.</li>
+                            <li><code>codigo</code> (obrigatório) referente a o numero de saida do produto</li>
                             <li><code>status</code> (obrigatório): O tipo de status que define a mensagem a ser enviada. Pode ser:
                                 <ul>
                                     <li><code>l</code>: Roteirização</li>
@@ -68,14 +69,16 @@
 POST /api/sendMsg/
 Content-Type: application/json
 {
-    "number": "5521981345727",
-    "nome": "João",
-    "status": "l",
+    "number": "5521912345678",
+    "nome": "leonardo",
+    "status": "at",  # Pode ser 'l', 't', 'n', etc.
     "chaveFiscal": "12345678901234",
-    "montador": "Carlos",
+    "montador": "alberto",
+    "motorista": "joao"
     "desc": "Mesa",
     "dataPrevisao": "2024-09-15",
-    "email": cliente@example.com.br
+    'email': 'example@gmail.com',
+    'codigo': '101010'
 }
                         </code></pre>
                     </div>
