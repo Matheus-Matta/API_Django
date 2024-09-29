@@ -1,0 +1,61 @@
+{% extends "partials/base.html" %} 
+{% load static %} 
+
+{% block title %}Apex Polar Area Charts{% endblock title %} 
+
+{% block extra_css %} 
+{% endblock extra_css %} 
+
+
+{% block pagetitle %}
+{% include "partials/page-title.html" with pagetitle="Polar Area Charts" title="Apex" %}
+{% endblock pagetitle %}
+
+{% block content %} 
+<div class="row">
+    <div class="col-xl-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title">Basic Polar Area Chart</h4>
+                <div dir="ltr">
+                    <div id="basic-polar-area" class="apex-charts" data-colors="#3e60d5,#6c757d,#47ad77,#fa5c7c,#ffbc00,#39afd1"></div>
+                </div>
+            </div>
+            <!-- end card body-->
+        </div>
+        <!-- end card -->
+    </div>
+    <!-- end col-->
+
+    <div class="col-xl-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title">Monochrome Polar Area</h4>
+                <div dir="ltr">
+                    <div id="monochrome-polar-area" class="apex-charts" data-colors="#6c757d"></div>
+                </div>
+            </div>
+            <!-- end card body-->
+        </div>
+        <!-- end card -->
+    </div>
+    <!-- end col-->
+</div>
+<!-- end row-->
+
+
+{% endblock content %} 
+
+{% block extra_js %} 
+
+        <!-- Apex Charts js -->
+        <script src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script> 
+
+        <!-- Apex Chart Polar Area Demo js -->
+        <script src="{% static 'js/pages/demo.apex-polar-area.js' %}"></script>        
+
+        <!-- App js -->
+        <script src="{% static 'js/app.min.js' %}"></script>
+
+{% endblock extra_js %}
+

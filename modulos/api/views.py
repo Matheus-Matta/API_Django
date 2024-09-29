@@ -14,7 +14,7 @@ from .encrypt import cryp_decode
 import json
 from .db_manage import PedidoManager
 
-def index(request):
+def index_api(request):
     return  HttpResponse(f"Essa api está Online!")
     
 def doc(request):

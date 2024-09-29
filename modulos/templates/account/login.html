@@ -1,0 +1,108 @@
+{% extends "account/base.html" %}
+{% load static %}
+
+{% block title %}Login{% endblock title %}
+
+{% block body_attr %}
+    class="authentication-bg position-relative"
+{% endblock %}
+
+{% block page_content %}
+    {% include "partials/background.html" %}
+
+    <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5 position-relative">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xxl-4 col-lg-5">
+                    <div class="card">
+
+                        <!-- Logo -->
+                        <div class="card-header p-0 text-center">
+                            <div class="auth-brand mb-0">
+                                <a href="{% url 'index' %}" class="logo-dark">
+                                    <span><img src="{% static 'images/logo.png' %}" alt="logo" height="180"></span>
+                                </a>
+                                <a href="{% url 'index' %}" class="logo-light">
+                                    <span><img src="{% static 'images/logo.png' %}" alt="logo" height="180"></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="card-body p-4 pt-0">
+
+                            <div class="text-center w-75 m-auto">
+                                <h4 class="text-dark-50 text-center pb-0 fw-bold">Login</h4>
+                                <p class="text-muted mb-4">Entre com seu Usuário e Senha para acessar o painel de admin.</p>
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-{{ message.tags }} pt-2">
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <form action="{% url 'login_auth' %}" method="post" class="needs-validation" novalidate>
+                                {% csrf_token %}
+
+                                <div class="mb-3">
+                                    <label for="emailaddress" class="form-label">Usuário</label>
+                                    <input class="form-control" type="text" id="emailaddress"
+                                           placeholder="Digite seu Usuário" name="username" required>
+                                    <div class="invalid-feedback">
+                                        Por favor! preencha esse campo.
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <a href="#" class="text-muted float-end fs-12">Esqueceu sua senha?</a>
+                                    <label for="password" class="form-label">Senha</label>
+                                    <div class="input-group input-group-merge">
+                                        <input type="password" id="password" class="form-control"
+                                               placeholder="Digite sua Senha" name="password" required>
+                                        <div class="input-group-text" data-password="false">
+                                            <span class="password-eye"></span>
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Por favor! preencha esse campo.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 mb-0 text-center">
+                                    <button class="btn btn-primary" type="submit"> Entrar </button>
+                                </div>
+
+                            </form>
+                        </div> <!-- end card-body -->
+                    </div>
+                    <!-- end card -->
+
+                    <div class="row mt-3">
+                        <div class="col-12 text-center">
+                            <p class="text-white-50">Não tem uma conta? <a href=""
+                                    class="text-white ms-1 link-offset-3 text-decoration-underline"><b>Cadastre-se</b></a>
+                            </p>
+                        </div> <!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+                </div> <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end page -->
+
+    <footer class="footer footer-alt">
+        <span class="text-white-50">
+            <script>document.write(new Date().getFullYear())</script> © Maxxx Móveis
+        </span>
+    </footer>
+{% endblock %}
+
+{% block extra_js %}
+    <!-- App js -->
+    <script src="{% static 'js/app.min.js' %}"></script>
+{% endblock %}

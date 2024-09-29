@@ -1,0 +1,85 @@
+{% load static %}
+
+{% include "partials/main.html" %}
+
+<head>
+    {% include "partials/title-meta.html" with title="Lock Screen" %}
+
+    {% include "partials/head-css.html" %}
+</head>
+
+<body class="authentication-bg">
+
+    {% include "partials/background.html" %}
+    
+    <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5 position-relative">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xxl-4 col-lg-5">
+                    <div class="card">
+                        <!-- Logo -->
+
+                        <div class="card-header pt-4 text-center">
+                            <div class="auth-brand mb-0">
+                                <a href="/" class="logo-dark">
+                                    <span><img src="{% static 'images/logo-dark.png' %}" alt="dark logo" height="28"></span>
+                                </a>
+                                <a href="/" class="logo-light">
+                                    <span><img src="{% static 'images/logo.png' %}" alt="logo" height="28"></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="card-body p-4">
+
+                            <div class="text-center w-75 m-auto">
+                                <img src="{% static 'images/users/avatar-1.jpg' %}" height="64" alt="user-image"
+                                    class="rounded-circle shadow">
+                                <h4 class="text-dark-50 text-center mt-3 fw-bold">Hi ! Tosha </h4>
+                                <p class="text-muted mb-4">Enter your password to access the admin.</p>
+                            </div>
+
+                            <form action="#">
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input class="form-control" type="password" required="" id="password"
+                                        placeholder="Enter your password">
+                                </div>
+
+                                <div class="mb-0 text-center">
+                                    <button class="btn btn-primary" type="submit">Log In</button>
+                                </div>
+                            </form>
+
+                        </div> <!-- end card-body-->
+                    </div>
+                    <!-- end card-->
+
+                    <div class="row mt-3">
+                        <div class="col-12 text-center">
+                            <p class="text-white-50">Not you? return <a href="{% url 'login' %}"
+                                    class="text-white ms-1 link-offset-3 text-decoration-underline"><b>Sign In</b></a>
+                            </p>
+                        </div> <!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+                </div> <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end page -->
+
+    <footer class="footer footer-alt fw-medium">
+        <span class="text-white-50">
+            <script>document.write(new Date().getFullYear())</script> © Jidox - Coderthemes.com
+        </span>
+    </footer>
+    {% include "partials/footer-script.html" %}
+
+    {% block extra_js %}
+    <!-- App js -->
+    <script src="{% static 'js/app.min.js' %}"></script>
+    {% endblock extra_js %}

@@ -33,16 +33,32 @@ CSRF_TRUSTED_ORIGINS = [config("DOMAIN"), 'http://localhost', 'http://127.0.0.1'
 
 # Application definition
 
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'modulos',
-    'modulos.api',
+DJANGO_APPS = [
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.sites",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.admin",
+    "django.forms",
+    "celery_progress",
 ]
+
+LOCAL_APPS = [
+    "modulos",
+    "modulos.api.apps.apiConfig",
+    "modulos.login.apps.loginConfig",
+    "modulos.dashboard.apps.dashboardConfig",
+    
+]
+
+THIRD_PARTY_APPS = []
+
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+
+LOGIN_URL = 'login'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -184,4 +200,15 @@ DATABASES_example = {
         'HOST': config('DATABASE_HOST'),  # Nome do container ou endereço IP do banco de dados
         'PORT': config('DATABASE_PORT', '5432'),  # Porta padrão do PostgreSQL
     }
+}
+
+# Definir a tag de mensagem padrão se necessário
+from django.contrib.messages import constants as message_constants
+
+MESSAGE_TAGS = {
+    message_constants.DEBUG: 'debug',
+    message_constants.INFO: 'info',
+    message_constants.SUCCESS: 'success',
+    message_constants.WARNING: 'warning',
+    message_constants.ERROR: 'danger',
 }

@@ -1,0 +1,241 @@
+<!-- ========== Horizontal Menu Start ========== -->
+<div class="topnav">
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg">
+            <div class="collapse navbar-collapse" id="topnav-menu-content">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="/" role="button">
+                            <i class="ri-dashboard-2-fill"></i>Dashboards
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-apps" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="ri-apps-line"></i>Apps <div class="arrow-down"></div>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="topnav-apps">
+                            <a href="{% url 'calendar' %}" class="dropdown-item">Calendar</a>
+                            <a href="{% url 'chat' %}" class="dropdown-item">Chat</a>
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-email" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Email <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-email">
+                                    <a href="{% url 'email-inbox' %}" class="dropdown-item">Inbox</a>
+                                    <a href="{% url 'email-read' %}" class="dropdown-item">Read Email</a>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-tasks" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Tasks <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-tasks">
+                                    <a href="{% url 'tasks' %}" class="dropdown-item">List</a>
+                                    <a href="{% url 'tasks-details' %}" class="dropdown-item">Details</a>
+                                </div>
+                            </div>
+                            <a href="{% url 'kanban' %}" class="dropdown-item">Kanban</a>
+                            <a href="{% url 'file-manager' %}" class="dropdown-item">File Manager</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="ri-pages-line"></i>Pages <div class="arrow-down"></div>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="topnav-pages">
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-auth" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Authenitication <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-auth">
+                                    <a href="{% url 'login' %}" class="dropdown-item">Login</a>
+                                    <a href="{% url 'login-2' %}" class="dropdown-item">Login 2</a>
+                                    <a href="{% url 'register' %}" class="dropdown-item">Register</a>
+                                    <a href="{% url 'register-2' %}" class="dropdown-item">Register 2</a>
+                                    <a href="{% url 'logout' %}" class="dropdown-item">Logout</a>
+                                    <a href="{% url 'logout-2' %}" class="dropdown-item">Logout 2</a>
+                                    <a href="{% url 'recoverpw' %}" class="dropdown-item">Recover Password</a>
+                                    <a href="{% url 'recoverpw-2' %}" class="dropdown-item">Recover Password 2</a>
+                                    <a href="{% url 'lock-screen' %}" class="dropdown-item">Lock Screen</a>
+                                    <a href="{% url 'lock-screen-2' %}" class="dropdown-item">Lock Screen 2</a>
+                                    <a href="{% url 'confirm-mail' %}" class="dropdown-item">Confirm Mail</a>
+                                    <a href="{% url 'confirm-mail-2' %}" class="dropdown-item">Confirm Mail 2</a>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-error" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Error <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-error">
+                                    <a href="{% url 'error-404' %}" class="dropdown-item">Error 404</a>
+                                    <a href="{% url 'error-404-alt' %}" class="dropdown-item">Error 404-alt</a>
+                                    <a href="{% url 'error-500' %}" class="dropdown-item">Error 500</a>
+                                </div>
+                            </div>
+                            <a href="{% url 'starter' %}" class="dropdown-item">Starter Page</a>
+                            <a href="{% url 'preloader' %}" class="dropdown-item">With Preloader</a>
+                            <a href="{% url 'profile' %}" class="dropdown-item">Profile</a>
+                            <a href="{% url 'invoice' %}" class="dropdown-item">Invoice</a>
+                            <a href="{% url 'faq' %}" class="dropdown-item">FAQ</a>
+                            <a href="{% url 'pricing' %}" class="dropdown-item">Pricing</a>
+                            <a href="{% url 'maintenance' %}" class="dropdown-item">Maintenance</a>
+                            <a href="{% url 'timeline' %}" class="dropdown-item">Timeline</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="ri-stack-line"></i>Components <div class="arrow-down"></div>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="topnav-components">
+                            <a href="{% url 'widgets' %}" class="dropdown-item">Widgets</a>
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-ui-kit" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Base UI 1 <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-ui-kit">
+                                    <a href="{% url 'accordions' %}" class="dropdown-item">Accordions</a>
+                                    <a href="{% url 'alerts' %}" class="dropdown-item">Alerts</a>
+                                    <a href="{% url 'avatars' %}" class="dropdown-item">Avatars</a>
+                                    <a href="{% url 'badges' %}" class="dropdown-item">Badges</a>
+                                    <a href="{% url 'breadcrumb' %}" class="dropdown-item">Breadcrumb</a>
+                                    <a href="{% url 'buttons' %}" class="dropdown-item">Buttons</a>
+                                    <a href="{% url 'cards' %}" class="dropdown-item">Cards</a>
+                                    <a href="{% url 'carousel' %}" class="dropdown-item">Carousel</a>
+                                    <a href="{% url 'dropdowns' %}" class="dropdown-item">Dropdowns</a>
+                                    <a href="{% url 'embed-video' %}" class="dropdown-item">Embed Video</a>
+                                    <a href="{% url 'grid' %}" class="dropdown-item">Grid</a>
+                                    <a href="{% url 'list-group' %}" class="dropdown-item">List Group</a>
+                                    <a href="{% url 'links' %}" class="dropdown-item">Links</a>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-ui-kit2" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Base UI 2 <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-ui-kit2">
+                                    <a href="{% url 'modals' %}" class="dropdown-item">Modals</a>
+                                    <a href="{% url 'notifications' %}" class="dropdown-item">Notifications</a>
+                                    <a href="{% url 'offcanvas' %}" class="dropdown-item">Offcanvas</a>
+                                    <a href="{% url 'placeholders' %}" class="dropdown-item">Placeholders</a>
+                                    <a href="{% url 'pagination' %}" class="dropdown-item">Pagination</a>
+                                    <a href="{% url 'popovers' %}" class="dropdown-item">Popovers</a>
+                                    <a href="{% url 'progress' %}" class="dropdown-item">Progress</a>
+                                    <a href="{% url 'spinners' %}" class="dropdown-item">Spinners</a>
+                                    <a href="{% url 'tabs' %}" class="dropdown-item">Tabs</a>
+                                    <a href="{% url 'tooltips' %}" class="dropdown-item">Tooltips</a>
+                                    <a href="{% url 'typography' %}" class="dropdown-item">Typography</a>
+                                    <a href="{% url 'utilities' %}" class="dropdown-item">Utilities</a>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-extended-ui" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Extended UI <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-extended-ui">
+                                    <a href="{% url 'extended-dragula' %}" class="dropdown-item">Dragula</a>
+                                    <a href="{% url 'extended-range-slider' %}" class="dropdown-item">Range Slider</a>
+                                    <a href="{% url 'extended-ratings' %}" class="dropdown-item">Ratings</a>
+                                    <a href="{% url 'extended-scrollbar' %}" class="dropdown-item">Scrollbar</a>
+                                    <a href="{% url 'extended-scrollspy' %}" class="dropdown-item">Scrollspy</a>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-forms" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Forms <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-forms">
+                                    <a href="{% url 'form-elements' %}" class="dropdown-item">Basic Elements</a>
+                                    <a href="{% url 'form-advanced' %}" class="dropdown-item">Form Advanced</a>
+                                    <a href="{% url 'form-validation' %}" class="dropdown-item">Validation</a>
+                                    <a href="{% url 'form-wizard' %}" class="dropdown-item">Wizard</a>
+                                    <a href="{% url 'form-fileuploads' %}" class="dropdown-item">File Uploads</a>
+                                    <a href="{% url 'form-editors' %}" class="dropdown-item">Editors</a>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-apex-charts" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Apex Charts <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-apex-charts">
+                                    <a href="{% url 'apex-area' %}" class="dropdown-item">Area</a>
+                                    <a href="{% url 'apex-bar' %}" class="dropdown-item">Bar</a>
+                                    <a href="{% url 'apex-bubble' %}" class="dropdown-item">Bubble</a>
+                                    <a href="{% url 'apex-candlestick' %}" class="dropdown-item">Candlestick</a>
+                                    <a href="{% url 'apex-column' %}" class="dropdown-item">Column</a>
+                                    <a href="{% url 'apex-heatmap' %}" class="dropdown-item">Heatmap</a>
+                                    <a href="{% url 'apex-line' %}" class="dropdown-item">Line</a>
+                                    <a href="{% url 'apex-mixed' %}" class="dropdown-item">Mixed</a>
+                                    <a href="{% url 'apex-timeline' %}" class="dropdown-item">Timeline</a>
+                                    <a href="{% url 'apex-boxplot' %}" class="dropdown-item">Boxplot</a>
+                                    <a href="{% url 'apex-treemap' %}" class="dropdown-item">Treemap</a>
+                                    <a href="{% url 'apex-pie' %}" class="dropdown-item">Pie</a>
+                                    <a href="{% url 'apex-radar' %}" class="dropdown-item">Radar</a>
+                                    <a href="{% url 'apex-radialbar' %}" class="dropdown-item">RadialBar</a>
+                                    <a href="{% url 'apex-scatter' %}" class="dropdown-item">Scatter</a>
+                                    <a href="{% url 'apex-polar-area' %}" class="dropdown-item">Polar Area</a>
+                                    <a href="{% url 'apex-sparklines' %}" class="dropdown-item">Sparklines</a>
+                                </div>
+                            </div>
+
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-chartjs" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Chartjs <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-chartjs">
+                                    <a href="{% url 'chartjs-area' %}" class="dropdown-item">Area</a>
+                                    <a href="{% url 'chartjs-bar' %}" class="dropdown-item">Bar</a>
+                                    <a href="{% url 'chartjs-line' %}" class="dropdown-item">Line</a>
+                                    <a href="{% url 'chartjs-other' %}" class="dropdown-item">Other</a>
+                                </div>
+                            </div>
+
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-tables" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Tables <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-tables">
+                                    <a href="{% url 'tables-basic' %}" class="dropdown-item">Basic Tables</a>
+                                    <a href="{% url 'tables-datatable' %}" class="dropdown-item">Data Tables</a>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-icons" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Icons <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-icons">
+                                    <a href="{% url 'icons-remixicons' %}" class="dropdown-item">Remix Icons</a>
+                                    <a href="{% url 'icons-bootstrap' %}" class="dropdown-item">Bootstrap Icons</a>
+                                    <a href="{% url 'icons-material' %}" class="dropdown-item">Material Symbol Icons</a>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-maps" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Maps <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-maps">
+                                    <a href="{% url 'google-map' %}" class="dropdown-item">Google Maps</a>
+                                    <a href="{% url 'vector-map' %}" class="dropdown-item">Vector Maps</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-layouts" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="ri-layout-line"></i>Layouts <div class="arrow-down"></div>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="topnav-layouts">
+                            <a href="{% url 'horizontal' %}" class="dropdown-item" target="_blank">Horizontal</a>
+                            <a href="{% url 'detached' %}" class="dropdown-item" target="_blank">Detached</a>
+                            <a href="{% url 'full' %}" class="dropdown-item" target="_blank">Full</a>
+                            <a href="{% url 'fullscreen' %}" class="dropdown-item" target="_blank">Fullscreen</a>
+                            <a href="{% url 'hover' %}" class="dropdown-item" target="_blank">Hover Menu</a>
+                            <a href="{% url 'compact' %}" class="dropdown-item" target="_blank">Compact Menu</a>
+                            <a href="{% url 'icon-view' %}" class="dropdown-item" target="_blank">Icon View</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+<!-- ========== Horizontal Menu End ========== -->

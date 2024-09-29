@@ -1,0 +1,79 @@
+{% extends "partials/base.html" %} 
+{% load static %} 
+
+{% block title %}Apex Boxplot Charts{% endblock title %} 
+
+{% block extra_css %} 
+{% endblock extra_css %} 
+
+
+{% block pagetitle %}
+{% include "partials/page-title.html" with pagetitle="Boxplot Charts" title="Apex" %}
+{% endblock pagetitle %}
+
+{% block content %} 
+<div class="row">
+    <div class="col-xl-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title mb-4">Basic Boxplot</h4>
+                <div dir="ltr">
+                    <div id="basic-boxplot" class="apex-charts" data-colors="#3e60d5,#47ad77"></div>
+                </div>
+            </div>
+            <!-- end card body-->
+        </div>
+        <!-- end card -->
+    </div>
+    <!-- end col-->
+
+    <div class="col-xl-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title mb-4">Scatter Boxplot </h4>
+                <div dir="ltr">
+                    <div id="scatter-boxplot" class="apex-charts" data-colors="#fa5c7c,#6c757d"></div>
+                </div>
+            </div>
+            <!-- end card body-->
+        </div>
+        <!-- end card -->
+    </div>
+    <!-- end col-->
+</div>
+<!-- end row-->
+
+<div class="row">
+    <div class="col-xl-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title mb-4">Horizontal BoxPlot</h4>
+                <div dir="ltr">
+                    <div id="horizontal-boxplot" class="apex-charts" data-colors="#3e60d5,#47ad77,#e3eaef"></div>
+                </div>
+            </div>
+            <!-- end card body-->
+        </div>
+        <!-- end card -->
+    </div>
+    <!-- end col-->
+</div>
+<!-- end row-->
+
+
+
+{% endblock content %} 
+
+{% block extra_js %} 
+
+        <!-- Apex Charts js -->
+        <script src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script> 
+
+        <!-- Apex Chart Boxplot Demo js -->
+        <script src="{% static 'js/pages/demo.apex-boxplot.js' %}"></script>        
+
+        <!-- App js -->
+        <script src="{% static 'js/app.min.js' %}"></script>
+
+{% endblock extra_js %}
+

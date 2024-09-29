@@ -1,0 +1,74 @@
+{% load static %}
+
+{% include "partials/main.html" %}
+
+<head>
+    {% include "partials/title-meta.html" with title="Confirm Email" %}
+
+    {% include "partials/head-css.html" %}
+</head>
+
+<body class="authentication-bg">
+
+    {% include "partials/background.html" %}
+
+    <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5 position-relative">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xxl-4 col-lg-5">
+                    <div class="card">
+                        <!-- Logo -->
+                        <div class="card-header pt-4 text-center">
+                            <div class="auth-brand mb-0">
+                                <a href="/" class="logo-dark">
+                                    <span><img src="{% static 'images/logo-dark.png' %}" alt="dark logo"
+                                            height="28"></span>
+                                </a>
+                                <a href="/" class="logo-light">
+                                    <span><img src="{% static 'images/logo.png' %}" alt="logo" height="28"></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="card-body p-4">
+
+                            <div class="text-center m-auto">
+                                <img src="{% static 'images/svg/mail_sent.svg' %}" alt="mail sent image" height="64" />
+                                <h4 class="text-dark-50 text-center mt-4 fw-bold">Please check your email</h4>
+                                <p class="text-muted mb-4">
+                                    A email has been send to <b>youremail@domain.com</b>.
+                                    Please check for an email from company and click on the included link to
+                                    reset your password.
+                                </p>
+                            </div>
+
+                            <form action="/">
+                                <div class="mb-0 text-center">
+                                    <button class="btn btn-primary" type="submit"><i class="ri-home-4-line me-1"></i>
+                                        Back to Home</button>
+                                </div>
+                            </form>
+
+                        </div> <!-- end card-body-->
+                    </div>
+                    <!-- end card-->
+
+                </div> <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end page -->
+
+    <footer class="footer footer-alt">
+        <span class="text-white-50">
+            <script>document.write(new Date().getFullYear())</script> © Jidox - Coderthemes.com
+        </span>
+    </footer>
+    {% include "partials/footer-script.html" %}
+
+    {% block extra_js %}
+    <!-- App js -->
+    <script src="{% static 'js/app.min.js' %}"></script>
+    {% endblock extra_js %}
