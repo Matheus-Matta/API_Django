@@ -1,0 +1,215 @@
+{% extends "partials/base.html" %} {% load static %}
+{% block title %}Campaign{% endblock title %} {% block extra_css %}
+
+<!-- Daterangepicker css -->
+<link rel="stylesheet" href="{% static 'vendor/daterangepicker/daterangepicker.css' %}" />
+
+<!-- Vector Map css -->
+<link rel="stylesheet" href="{% static 'vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css' %}" />
+
+{% endblock extra_css %} {% block content %}
+<div class="row row-cols-1 row-cols-xxl-4 row-cols-lg-3 row-cols-md-2 mt-2">
+    <div class="col">
+        <div class="card widget-icon-box">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div class="flex-grow-1 overflow-hidden">
+                        <h5 class="text-muted text-uppercase fs-13 mt-0" title="Number of Orders">Mensagens enviadas</h5>
+                        <h3 class="fs-1 m-0">{{ total_numbers }}</h3>
+                    </div>
+                    <div class="avatar-sm flex-shrink-0">
+                        <span class="avatar-title text-bg-info rounded rounded-3 fs-3 widget-icon-box-avatar shadow">
+                            <i class="ri-message-3-line"></i>
+                        </span>
+                    </div>
+                </div>
+            </div> <!-- end card-body-->
+        </div> <!-- end card-->
+    </div> <!-- end col-->
+
+    <div class="col">
+        <div class="card widget-icon-box">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div class="flex-grow-1 overflow-hidden">
+                        <h5 class="text-muted text-uppercase fs-13 mt-0" title="Successful Messages">Mensagens com Sucesso</h5>
+                        <h3 class="fs-1 m-0">{{ total_success }}</h3>
+                    </div>
+                    <div class="avatar-sm flex-shrink-0">
+                        <span class="avatar-title text-bg-success rounded rounded-3 fs-3 widget-icon-box-avatar shadow ">
+                            <i style="padding-top: 2px;" class="ri-checkbox-circle-line"></i> <!-- Ícone de mensagem -->
+                        </span>
+                    </div>
+                </div>
+            </div> <!-- end card-body-->
+        </div> <!-- end card-->
+    </div> <!-- end col-->
+    <div class="col">
+        <div class="card widget-icon-box">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div class="flex-grow-1 overflow-hidden">
+                        <h5 class="text-muted text-uppercase fs-13 mt-0" title="Error Messages">Mensagens com Erro</h5>
+                        <h3 class="fs-1 m-0">{{ total_erro }}</h3>
+                    </div>
+                    <div class="avatar-sm flex-shrink-0">
+                        <span class="avatar-title text-bg-danger rounded rounded-3 fs-3 widget-icon-box-avatar shadow">
+                            <i style="padding-top: 2px;" class="ri-error-warning-line"></i> <!-- Ícone de erro -->
+                        </span>
+                    </div>
+                </div>
+            </div> <!-- end card-body-->
+        </div> <!-- end card-->
+    </div> <!-- end col-->
+    <div class="col">
+        <div class="card widget-icon-box">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div class="flex-grow-1 overflow-hidden">
+                        <h5 class="text-muted text-uppercase fs-13 mt-0" title="Conversation Ration">Taxa de resposta</h5>
+                        <h3 class="fs-1 m-0">{{ response_rate }}%</h3>
+                    </div>
+                    <div class="avatar-sm flex-shrink-0">
+                        <span class="avatar-title text-bg-warning rounded rounded-3 fs-3 widget-icon-box-avatar">
+                            <i class="ri-pulse-line"></i>
+                        </span>
+                    </div>
+                </div>
+            </div> <!-- end card-body-->
+        </div> <!-- end card-->
+    </div> <!-- end col-->
+</div> <!-- end row -->
+
+<div class="row">
+    <div class="col-lg-4">
+        
+    </div> 
+    <!-- end col-->
+    <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <div dir="ltr">
+                        <div id="charts_msg" class="apex-charts" data-colors="#ffbc00" style="min-height: 395px;">
+                    </div>
+                </div> <!-- end card body-->
+            </div> <!-- end card -->
+    </div> <!-- end col -->
+</div>
+<!-- end row -->
+
+
+
+</div>
+<!-- end row -->
+
+{% endblock content %} {% block extra_js %}
+<!-- Daterangepicker js -->
+<script src="{% static 'vendor/daterangepicker/moment.min.js' %}"></script>
+<script src="{% static 'vendor/daterangepicker/daterangepicker.js' %}"></script>
+
+<!-- Apex Charts js -->
+<script src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
+
+<!-- Vector Map js -->
+<script src="{% static 'vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js' %}"></script>
+<script src="{% static 'vendor/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js' %}"></script>
+
+<!-- Dashboard App js -->
+<script src="{% static 'js/pages/demo.dashboard.js' %}"></script>
+
+<!-- App js -->
+<script src="{% static 'js/app.min.js' %}"></script>
+
+<script>
+    // charts para grafico de msg enviadas
+    let sucess_array = JSON.parse('{{ msg_sucess|safe }}');
+    let erro_array = JSON.parse('{{ msg_erro|safe }}');
+
+    var options = {
+        series: [{
+            name: "Sucesso",
+            data: sucess_array.map(value => value === 0 ? null : value) // Dados da array de sucesso
+        }, {
+            name: "Erro",
+            data: erro_array.map(value => value === 0 ? null : value) // Dados da array de erro
+        }],
+        chart: {
+            height: 350,
+            type: 'line',
+            zoom: {
+                enabled: false
+            },
+            animations: {
+                enabled: true
+            }
+        },
+        colors: ['#28a745', '#dc3545'],  // Verde para sucesso, vermelho para erro
+        stroke: {
+            width: [8, 8],
+            curve: 'smooth'
+        },
+        labels: ['0h', '1h', '2h', '3h', '4h', '5h', '6h', '7h', '8h', '9h', '10h', '11h', '12h', '13h', '14h', '15h', '16h', '17h', '18h', '19h', '20h', '21h', '22h', '23h'],
+        title: {
+            text: 'Horas do Dia'
+        },
+        yaxis: { 
+            title: { 
+                text: 'Número de Mensagens' 
+            } 
+        }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#charts_msg"), options);
+    chart.render();
+</script>
+       
+<script>
+       
+    function att_progress_bar(){
+        // Selecionar todos os elementos com a classe 'data-task'
+        var tasks = document.querySelectorAll('[data-task]');
+
+        tasks.forEach(task => {
+            var taskId = task.getAttribute('data-task');
+            var progressUrl = `http://10.0.0.73:8888/api/campaigns/progress/${taskId}`;
+
+            // Fazer requisição Fetch para obter o progresso
+            fetch(progressUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(progressData => {
+                    // Atualizar a barra de progresso e o valor
+                    var progressBar = document.getElementById('progress-bar-' + taskId);
+                    var progressValue = document.getElementById('progress-value-' + taskId);
+                    var progressState = document.getElementById('progress-state-' + taskId);
+                    if (progressBar && progressValue) {
+                        var progressPercent = progressData.progress.percent || 0;
+                        progressBar.style.width = progressPercent + '%';
+                        progressBar.setAttribute('aria-valuenow', progressPercent);
+                        progressValue.textContent = progressPercent + '%';
+                        if (progressData.state == 'FAILURE'){
+                            progressState.classList.remove('bg-warning')
+                            progressState.classList.add('bg-danger')
+                            text = progressState.parentNode
+                            text.classList.remove('text-warning')
+                            text.classList.add('text-danger')
+                        }
+                        progressState.innerHTML = progressData.state;
+                        
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching progress:', error);
+                });
+        });
+     }
+    // Atualizar o progresso a cada 5 segundos
+    // att_progress_bar();
+    //setInterval( att_progress_bar, 5000);
+</script>
+
+{% endblock extra_js %}

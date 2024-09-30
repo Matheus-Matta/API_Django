@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.urls import path
-from . import views
+from .views.campaign import *
 
 urlpatterns = [
     
-    path('dashboard/campaign', views.dashboard_campaign, name="dashboard_campaign"),
+    path('dashboard/campaign', dashboard_campaign, name="dashboard_campaign"),
+    path('dashboard/campaign/<int:campaign_id>', details_campaign, name="details_campaign"),
 
     
 ]
