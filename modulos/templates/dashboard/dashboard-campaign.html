@@ -35,12 +35,12 @@
                         <i class="ri-refresh-line"></i>
                     </a>
                 </div>
-               
+
             </form>
         </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Função para obter o valor de um parâmetro da URL
             function getParameterByName(name) {
                 const url = new URL(window.location.href);
@@ -91,10 +91,12 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div class="flex-grow-1 overflow-hidden">
-                        <h5 class="text-muted text-uppercase fs-13 mt-0" title="Number of Customers">Campanha feitas</h5>
+                        <h5 class="text-muted text-uppercase fs-13 mt-0" title="Number of Customers">Campanha feitas
+                        </h5>
                         <h3 class="my-3">{{ campaign_total }}</h3>
                         <p class="mb-0 text-muted text-truncate">
-                            <span class="badge bg-success me-1"><i class="ri-arrow-up-line"></i>{{ campaign_total_now }}</span>
+                            <span class="badge bg-success me-1"><i
+                                    class="ri-arrow-up-line"></i>{{campaign_total_now}}</span>
                             <span>Hoje</span>
                         </p>
                     </div>
@@ -112,10 +114,12 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div class="flex-grow-1 overflow-hidden">
-                        <h5 class="text-muted text-uppercase fs-13 mt-0" title="Completed Campaigns">Campanhas Concluídas</h5>
+                        <h5 class="text-muted text-uppercase fs-13 mt-0" title="Completed Campaigns">Campanhas
+                            Concluídas</h5>
                         <h3 class="my-3">{{ campaign_finaly }}</h3>
                         <p class="mb-0 text-muted text-truncate">
-                            <span class="badge bg-primary me-1"><i class="ri-check-line"></i> {{ campaign_finaly_now }}</span>
+                            <span class="badge bg-primary me-1"><i
+                                    class="ri-check-line"></i>{{campaign_finaly_now}}</span>
                             <span>Hoje</span>
                         </p>
                     </div>
@@ -133,10 +137,12 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div class="flex-grow-1 overflow-hidden">
-                        <h5 class="text-muted text-uppercase fs-13 mt-0" title="Number of Orders">Mensagens enviadas</h5>
-                        <h3 class="my-3">{{ total_numbers }}</h3>
+                        <h5 class="text-muted text-uppercase fs-13 mt-0" title="Number of Orders">Mensagens enviadas
+                        </h5>
+                        <h3 class="my-3">{{total_numbers}}</h3>
                         <p class="mb-0 text-muted text-truncate">
-                            <span style="background-color: #299bf6;" class="badge me-1"><i class="ri-arrow-up-line"></i>{{ total_numbers_now }}</span>
+                            <span style="background-color: #299bf6;" class="badge me-1"><i
+                                    class="ri-arrow-up-line"></i>{{total_numbers_now}}</span>
                             <span>Hoje</span>
                         </p>
                     </div>
@@ -155,15 +161,18 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div class="flex-grow-1 overflow-hidden">
-                        <h5 class="text-muted text-uppercase fs-13 mt-0" title="Successful Messages">Mensagens com Sucesso</h5>
+                        <h5 class="text-muted text-uppercase fs-13 mt-0" title="Successful Messages">Mensagens com
+                            Sucesso</h5>
                         <h3 class="my-3">{{ total_success }}</h3>
                         <p class="mb-0 text-muted text-truncate">
-                            <span class="badge bg-success me-1"><i class="ri-arrow-up-line"></i>{{ total_success_now }}</span>
+                            <span class="badge bg-success me-1"><i
+                                    class="ri-arrow-up-line"></i>{{total_success_now}}</span>
                             <span>Hoje</span>
                         </p>
                     </div>
                     <div class="avatar-sm flex-shrink-0">
-                        <span class="avatar-title text-bg-success rounded rounded-3 fs-3 widget-icon-box-avatar shadow ">
+                        <span
+                            class="avatar-title text-bg-success rounded rounded-3 fs-3 widget-icon-box-avatar shadow ">
                             <i style="padding-top: 2px;" class="ri-checkbox-circle-line"></i> <!-- Ícone de mensagem -->
                         </span>
                     </div>
@@ -179,7 +188,7 @@
                         <h5 class="text-muted text-uppercase fs-13 mt-0" title="Error Messages">Mensagens com Erro</h5>
                         <h3 class="my-3">{{ total_erro }}</h3>
                         <p class="mb-0 text-muted text-truncate">
-                            <span class="badge bg-danger me-1"><i class="ri-arrow-up-line"></i>{{ total_erro_now }}</span>
+                            <span class="badge bg-danger me-1"><i class="ri-arrow-up-line"></i>{{total_erro_now}}</span>
                             <span>Hoje</span>
                         </p>
                     </div>
@@ -197,10 +206,12 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div class="flex-grow-1 overflow-hidden">
-                        <h5 class="text-muted text-uppercase fs-13 mt-0" title="Conversation Ration">Taxa de resposta</h5>
+                        <h5 class="text-muted text-uppercase fs-13 mt-0" title="Conversation Ration">Taxa de resposta
+                        </h5>
                         <h3 class="my-3">{{ response_rate }}%</h3>
                         <p class="mb-0 text-muted text-truncate">
-                            <span class="badge bg-warning me-1"><i class="ri-arrow-up-line"></i>{{ response_rate_now }}%</span>
+                            <span class="badge bg-warning me-1"><i
+                                    class="ri-arrow-up-line"></i>{{response_rate_now}}%</span>
                             <span>Hoje</span>
                         </p>
                     </div>
@@ -222,89 +233,97 @@
                 <h4 class="header-title">Campanhas ativas</h4>
             </div>
 
-            <div class="card-body pt-0 scrollbar-responsive" style="min-height: 425px; max-height: 100px; overflow-x: auto;">
+            <div class="card-body pt-0 scrollbar-responsive"
+                style="min-height: 425px; max-height: 100px; overflow-x: auto;">
                 <!-- ApexCharts -->
                 <div>
                     {% for campaign in campaigns %}
-                        {% if campaign.fields.status == 'processando' %}
-                            <a style="cursor: pointer;" data-task="{{campaign.fields.id_progress}}">
-                                <h5 class="mb-1 mt-0 fw-normal text-warning">
-                                    {{ campaign.fields.name }} | 
-                                    <span id="progress-state-{{ campaign.fields.id_progress }}" class="badge bg-warning text-white "></span> 
-                                </h5>
-                                <div class="progress-w-percent">
-                                    <span class="progress-value fw-bold" id="progress-value-{{ campaign.fields.id_progress }}">0%</span>
-                                    <div class="progress progress-sm">
-                                        <div class="progress-bar" id="progress-bar-{{ campaign.fields.id_progress }}" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </a>
-                            <script>
-                                document.querySelector('[data-task="{{campaign.fields.id_progress}}"]').addEventListener("click", function() {
-                                    window.location.href = '{% url "details_campaign" campaign.pk %}';
-                                });
-                            </script>
-                        {% endif %}
+                    {% if campaign.fields.status == 'processando' %}
+                    <a style="cursor: pointer;" data-task="{{campaign.fields.id_progress}}">
+                        <h5 class="mb-1 mt-0 fw-normal text-warning">
+                            {{ campaign.fields.name }} |
+                            <span id="progress-state-{{ campaign.fields.id_progress }}"
+                                class="badge bg-warning text-white "></span>
+                        </h5>
+                        <div class="progress-w-percent">
+                            <span class="progress-value fw-bold"
+                                id="progress-value-{{ campaign.fields.id_progress }}">0%</span>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar" id="progress-bar-{{ campaign.fields.id_progress }}"
+                                    role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
+                                    aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </a>
+                    <script>
+                        document.querySelector('[data-task="{{campaign.fields.id_progress}}"]').addEventListener("click", function () {
+                            window.location.href = '{% url "details_campaign" campaign.pk %}';
+                        });
+                    </script>
+                    {% endif %}
                     {% endfor %}
                 </div>
             </div>
         </div> <!-- end card-->
     </div> <!-- end col-->
-        <div class="col-xl-8">
-            <div class="card">
-                <div class="d-flex card-header justify-content-between align-items-center">
-                    <h4 class="header-title">Campanhas anteriores</h4>
-                    <a href="javascript:void(0);" class="btn btn-sm btn-success">Export <i class="ri-download-line ms-1"></i></a>
-                </div>
-    
-                <div class="card-body p-0">
-                    <!-- Adicionando overflow para garantir o scroll em telas menores -->
-                    <div class="table-responsive p-2 scrollbar-responsive" style="min-height: 410px; max-height: 410px; overflow-x: auto;">
-                        <table class="table table-sm table-centered table-hover table-borderless mb-0">
-                            <thead class="border-top border-bottom bg-light-subtle border-light">
-                                <tr>
-                                    <th style="width: 15%;" class="pl-2">Nome</th>
-                                    <th>Status</th>
-                                    <th>Enviadas</th>
-                                    <th>Sucessos</th>
-                                    <th>Erros</th>
-                                    <th>Resposta</th>
-                                    <th>Data inicio</th>
-                                    <th>Data fim</th>
-                                </tr> 
-                            </thead>
-                            <tbody>
-                                {% for campaign in campaigns %}
-                                    {% if campaign.fields.status != 'processando'  %}
-                                    <tr class="campaign-list-{{ campaign.pk }}" style="cursor: pointer;">
-                                            <td>
-                                                {{ campaign.fields.name }}
-                                            </td>
-                                            <td class="{% if campaign.fields.status == 'finalizado' %}text-success{% elif campaign.fields.status == 'cancelado' %}text-danger{% endif %}">
-                                                {{ campaign.fields.status }}
-                                            </td>
-                                            <td>{{ campaign.fields.total_numbers }}</td>
-                                            <td>{{ campaign.fields.send_success }}</td>
-                                            <td>{{ campaign.fields.send_erro }}</td>
-                                            <td>{{ campaign.fields.response_rate }}%</td>
-                                            <td>{{ campaign.fields.start_date_formatted }}</td>
-                                            <td>{{ campaign.fields.end_date_formatted }}</td>
-                                    </tr>
-                                    <script>
-                                        document.querySelector('.campaign-list-{{ campaign.pk }}').addEventListener("click", function() {
-                                            window.location.href = '{% url "details_campaign" campaign.pk %}';
-                                        });
-                                    </script>
-                                    {% endif %}
-                                {% endfor %}
-                              
-                            </tbody>
-                        </table>
-                    </div> <!-- end table-responsive -->
-                </div> <!-- end card-body -->
-            </div> <!-- end card -->
-        </div>
-        <!-- end col -->
+    <div class="col-xl-8">
+        <div class="card">
+            <div class="d-flex card-header justify-content-between align-items-center">
+                <h4 class="header-title">Campanhas anteriores</h4>
+                <a href="javascript:void(0);" class="btn btn-sm btn-success">Export <i
+                        class="ri-download-line ms-1"></i></a>
+            </div>
+
+            <div class="card-body p-0">
+                <!-- Adicionando overflow para garantir o scroll em telas menores -->
+                <div class="table-responsive p-2 scrollbar-responsive"
+                    style="min-height: 410px; max-height: 410px; overflow-x: auto;">
+                    <table class="table table-sm table-centered table-hover table-borderless mb-0">
+                        <thead class="border-top border-bottom bg-light-subtle border-light">
+                            <tr>
+                                <th style="width: 15%;" class="pl-2">Nome</th>
+                                <th>Status</th>
+                                <th>Enviadas</th>
+                                <th>Sucessos</th>
+                                <th>Erros</th>
+                                <th>Resposta</th>
+                                <th>Data inicio</th>
+                                <th>Data fim</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for campaign in campaigns %}
+                            {% if campaign.fields.status != 'processando' %}
+                            <tr class="campaign-list-{{ campaign.pk }}" style="cursor: pointer;">
+                                <td>
+                                    {{ campaign.fields.name }}
+                                </td>
+                                <td
+                                    class="{% if campaign.fields.status == 'finalizado' %}text-success{% elif campaign.fields.status == 'cancelado' %}text-danger{% endif %}">
+                                    {{ campaign.fields.status }}
+                                </td>
+                                <td>{{ campaign.fields.total_numbers }}</td>
+                                <td>{{ campaign.fields.send_success }}</td>
+                                <td>{{ campaign.fields.send_erro }}</td>
+                                <td>{{ campaign.fields.response_rate }}%</td>
+                                <td>{{ campaign.fields.start_date_formatted }}</td>
+                                <td>{{ campaign.fields.end_date_formatted }}</td>
+                            </tr>
+                            <script>
+                                document.querySelector('.campaign-list-{{ campaign.pk }}').addEventListener("click", function () {
+                                    window.location.href = '{% url "details_campaign" campaign.pk %}';
+                                });
+                            </script>
+                            {% endif %}
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div> <!-- end table-responsive -->
+            </div> <!-- end card-body -->
+        </div> <!-- end card -->
+    </div>
+    <!-- end col -->
 </div>
 <!-- end row -->
 
@@ -334,14 +353,14 @@
 <script src="{% static 'js/app.min.js' %}"></script>
 
 <script>
-       
-    function att_progress_bar(){
+
+    function att_progress_bar() {
         // Selecionar todos os elementos com a classe 'data-task'
         var tasks = document.querySelectorAll('[data-task]');
 
         tasks.forEach(task => {
             var taskId = task.getAttribute('data-task');
-            var progressUrl = `http://10.0.0.73:8888/api/campaigns/progress/${taskId}`;
+            var progressUrl = `http://186.216.60.62:8888/api/campaigns/progress/${taskId}`;
 
             // Fazer requisição Fetch para obter o progresso
             fetch(progressUrl)
@@ -361,7 +380,7 @@
                         progressBar.style.width = progressPercent + '%';
                         progressBar.setAttribute('aria-valuenow', progressPercent);
                         progressValue.textContent = progressPercent + '%';
-                        if (progressData.state == 'FAILURE'){
+                        if (progressData.state == 'FAILURE') {
                             progressState.classList.remove('bg-warning')
                             progressState.classList.add('bg-danger')
                             text = progressState.parentNode
@@ -369,17 +388,17 @@
                             text.classList.add('text-danger')
                         }
                         progressState.innerHTML = progressData.state;
-                        
+
                     }
                 })
                 .catch(error => {
                     console.error('Error fetching progress:', error);
                 });
         });
-     }
+    }
     // Atualizar o progresso a cada 5 segundos
     att_progress_bar();
-    setInterval( att_progress_bar, 5000);
+    setInterval(att_progress_bar, 5000);
 </script>
 
 {% endblock extra_js %}

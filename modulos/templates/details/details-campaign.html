@@ -14,7 +14,8 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div class="flex-grow-1 overflow-hidden">
-                        <h5 class="text-muted text-uppercase fs-13 mt-0" title="Number of Orders">Mensagens enviadas</h5>
+                        <h5 class="text-muted text-uppercase fs-13 mt-0" title="Number of Orders">Mensagens enviadas
+                        </h5>
                         <h3 class="fs-1 m-0">{{ total_numbers }}</h3>
                     </div>
                     <div class="avatar-sm flex-shrink-0">
@@ -32,11 +33,13 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div class="flex-grow-1 overflow-hidden">
-                        <h5 class="text-muted text-uppercase fs-13 mt-0" title="Successful Messages">Mensagens com Sucesso</h5>
+                        <h5 class="text-muted text-uppercase fs-13 mt-0" title="Successful Messages">Mensagens com
+                            Sucesso</h5>
                         <h3 class="fs-1 m-0">{{ total_success }}</h3>
                     </div>
                     <div class="avatar-sm flex-shrink-0">
-                        <span class="avatar-title text-bg-success rounded rounded-3 fs-3 widget-icon-box-avatar shadow ">
+                        <span
+                            class="avatar-title text-bg-success rounded rounded-3 fs-3 widget-icon-box-avatar shadow ">
                             <i style="padding-top: 2px;" class="ri-checkbox-circle-line"></i> <!-- Ícone de mensagem -->
                         </span>
                     </div>
@@ -66,7 +69,8 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div class="flex-grow-1 overflow-hidden">
-                        <h5 class="text-muted text-uppercase fs-13 mt-0" title="Conversation Ration">Taxa de resposta</h5>
+                        <h5 class="text-muted text-uppercase fs-13 mt-0" title="Conversation Ration">Taxa de resposta
+                        </h5>
                         <h3 class="fs-1 m-0">{{ response_rate }}%</h3>
                     </div>
                     <div class="avatar-sm flex-shrink-0">
@@ -82,26 +86,75 @@
 
 <div class="row">
     <div class="col-lg-4">
-        
-    </div> 
-    <!-- end col-->
-    <div class="col-lg-8">
-            <div class="card">
-                <div class="card-body">
-                    <div dir="ltr">
-                        <div id="charts_msg" class="apex-charts" data-colors="#ffbc00" style="min-height: 395px;">
+        <div class="card">
+            <div class="card-body">
+                <div dir="ltr">
+                    <div id="chart-progress" class="apex-charts" data-colors="#ffbc00" style="min-height: 395px;">
                     </div>
                 </div> <!-- end card body-->
             </div> <!-- end card -->
-    </div> <!-- end col -->
+        </div>
+    </div>
+    <!-- end col-->
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-body">
+                <div dir="ltr">
+                    <div id="charts_msg" class="apex-charts" data-colors="#ffbc00" style="min-height: 395px;">
+                    </div>
+                </div> <!-- end card body-->
+            </div> <!-- end card -->
+        </div> <!-- end col -->
+    </div>
+    <!-- end row -->
 </div>
+
 <!-- end row -->
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="d-flex card-header justify-content-between align-items-center">
+                <h4 class="header-title">LOGS</h4>
+            </div>
 
-
-
+            <div class="card-body p-0">
+                <div class="table-responsive p-2 scrollbar-responsive"
+                    style="min-height: 610px; max-height: 410px; overflow-x: auto;">
+                    <table class="table table-sm table-centered table-hover table-borderless mb-0">
+                        <thead class="border-top border-bottom bg-light-subtle border-light">
+                            <tr>
+                                <th>Numero</th>
+                                <th>Code</th>
+                                <th>Status</th>
+                                <th>Mensagem</th>
+                                <th>Data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for log in logs %}
+                            <tr>
+                                <td>{{ log.fields.numero }}</td>
+                                <td>{{ log.fields.code }}</td>
+                                <td
+                                    class="{% if log.fields.status == 'erro' %}text-danger{% elif log.fields.status == 'sucesso' %}text-success{% endif %}">
+                                    {{ log.fields.status }}
+                                </td>
+                                <td style="text-wrap: nowrap;" class="fs-8">
+                                    {{ log.fields.msg|safe|cut:'\\'|cut:'\\"'|cut:'{'|cut:'}' }}
+                                    <!-- Remove as barras e caracteres desnecessários -->
+                                </td>
+                                <td style="text-wrap: nowrap;" class="fs-8">
+                                    {{ log.fields.start_date_formatted }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div> <!-- end table-responsive -->
+            </div> <!-- end card-body -->
+        </div> <!-- end card -->
+    </div>
 </div>
-<!-- end row -->
-
 {% endblock content %} {% block extra_js %}
 <!-- Daterangepicker js -->
 <script src="{% static 'vendor/daterangepicker/moment.min.js' %}"></script>
@@ -140,76 +193,112 @@
                 enabled: false
             },
             animations: {
-                enabled: true
+                enabled: false
             }
-        },
-        colors: ['#28a745', '#dc3545'],  // Verde para sucesso, vermelho para erro
+        },  // Verde para sucesso, vermelho para erro
         stroke: {
             width: [8, 8],
             curve: 'smooth'
         },
         labels: ['0h', '1h', '2h', '3h', '4h', '5h', '6h', '7h', '8h', '9h', '10h', '11h', '12h', '13h', '14h', '15h', '16h', '17h', '18h', '19h', '20h', '21h', '22h', '23h'],
+        colors: ['#28a745', '#dc3545'],
         title: {
             text: 'Horas do Dia'
         },
-        yaxis: { 
-            title: { 
-                text: 'Número de Mensagens' 
-            } 
+        yaxis: {
+            title: {
+                text: 'Número de Mensagens'
+            }
         }
     };
 
     var chart = new ApexCharts(document.querySelector("#charts_msg"), options);
     chart.render();
 </script>
-       
+
 <script>
-       
-    function att_progress_bar(){
-        // Selecionar todos os elementos com a classe 'data-task'
-        var tasks = document.querySelectorAll('[data-task]');
+    // Variável para armazenar o gráfico
+    let chart_progress = null;
 
-        tasks.forEach(task => {
-            var taskId = task.getAttribute('data-task');
-            var progressUrl = `http://10.0.0.73:8888/api/campaigns/progress/${taskId}`;
+    function att_progress_bar() {
+        var progressUrl = `http://186.216.60.62:8888/api/campaigns/progress/{{ campaign.id_progress }}`;
 
-            // Fazer requisição Fetch para obter o progresso
-            fetch(progressUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(progressData => {
-                    // Atualizar a barra de progresso e o valor
-                    var progressBar = document.getElementById('progress-bar-' + taskId);
-                    var progressValue = document.getElementById('progress-value-' + taskId);
-                    var progressState = document.getElementById('progress-state-' + taskId);
-                    if (progressBar && progressValue) {
-                        var progressPercent = progressData.progress.percent || 0;
-                        progressBar.style.width = progressPercent + '%';
-                        progressBar.setAttribute('aria-valuenow', progressPercent);
-                        progressValue.textContent = progressPercent + '%';
-                        if (progressData.state == 'FAILURE'){
-                            progressState.classList.remove('bg-warning')
-                            progressState.classList.add('bg-danger')
-                            text = progressState.parentNode
-                            text.classList.remove('text-warning')
-                            text.classList.add('text-danger')
-                        }
-                        progressState.innerHTML = progressData.state;
-                        
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching progress:', error);
-                });
-        });
-     }
-    // Atualizar o progresso a cada 5 segundos
-    // att_progress_bar();
-    //setInterval( att_progress_bar, 5000);
+        // Fazer requisição Fetch para obter o progresso
+        fetch(progressUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(progressData => {
+                let color = '#299bf6'
+                let status = '{{ campaign.status }}'
+                if (status == 'cancelado') {
+                    let color = '#f7473a'
+                }
+                let progressPercent = 100
+
+                if (status != 'finalizado') {
+                    status = progressData.state
+                    progressPercent = progressData.progress.percent || 0;
+                }
+                // Se o gráfico já foi criado, atualiza os dados
+                if (chart_progress) {
+                    chart_progress.updateSeries([progressPercent]);
+                    chart.updateOptions({
+                        labels: [progressData.state]
+                    });  // Atualiza o gráfico com a nova porcentagem
+                } else {
+                    // Criar o gráfico radial pela primeira vez
+                    var options = {
+                        series: [progressPercent],  // Percentual do progresso
+                        chart: {
+                            height: 350,
+                            type: 'radialBar',
+                        },
+                        colors: [color],
+                        plotOptions: {
+                            radialBar: {
+                                hollow: {
+                                    size: '70%',
+                                },
+                                dataLabels: {
+                                    show: true,
+                                    name: {
+                                        show: true,
+                                        fontSize: '22px',
+                                    },
+                                    value: {
+                                        show: true,
+                                        fontSize: '16px',
+                                        formatter: function (val) {
+                                            return val + "%";  // Mostra o percentual
+                                        }
+                                    }
+                                }
+                            },
+                        },
+                        labels: [status],
+                    };
+
+                    // Renderizar o gráfico pela primeira vez
+                    chart_progress = new ApexCharts(document.querySelector("#chart-progress"), options);
+                    chart_progress.render();
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching progress:', error);
+            });
+    }
+
+    // Chame a função para renderizar o gráfico inicialmente
+    att_progress_bar();
+
+    // Atualizar o progresso a cada 5 segundos sem recriar o gráfico
+    if (status != 'finalizado') {
+        setInterval(att_progress_bar, 5000);
+    }
 </script>
 
 {% endblock extra_js %}

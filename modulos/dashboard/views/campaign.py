@@ -24,7 +24,7 @@ def dashboard_campaign(request):
             last_day = monthrange(today.year, today.month)[1]
             data_fim = today.replace(day=last_day).strftime('%Y-%m-%d')
 
-        api_url = f"http://10.0.0.73:8888/api/campaigns?dataInicio={data_inicio}&dataFim={data_fim}"
+        api_url = f"http://186.216.60.62:8888/api/campaigns?dataInicio={data_inicio}&dataFim={data_fim}"
         response = requests.get(api_url)
 
         if response.status_code == 200:
@@ -113,7 +113,7 @@ def dashboard_campaign(request):
 @login_required
 def details_campaign(request, campaign_id):
     try:
-        api_url = f"http://10.0.0.73:8888/api/campaigns/{campaign_id}"
+        api_url = f"http://186.216.60.62:8888/api/campaigns/{campaign_id}"
         response = requests.get(api_url)
         campaign_response = response.json()
         print(campaign_response)
@@ -149,6 +149,17 @@ def details_campaign(request, campaign_id):
                 data_criacao = datetime.strptime(criado, '%Y-%m-%dT%H:%M:%S.%fZ')
                 hora = data_criacao.hour  # Obtém a hora do log
 
+                start_date_str = fields.get('created_at')
+                if start_date_str:  # Verifica se existe uma data antes de converter
+                    try:
+                        start_date_obj = datetime.strptime(start_date_str, '%Y-%m-%dT%H:%M:%S.%fZ')
+                        log['fields']['start_date_formatted'] = start_date_obj.strftime('%Y-%m-%d %H:%M')
+                    except ValueError:
+                        # Caso o formato da data não corresponda, tratamos o erro aqui
+                        log['fields']['start_date_formatted'] = 'Formato de data inválido'
+                else:
+                    log['fields']['start_date_formatted'] = 'Data não disponível'
+
                 # Atualiza o array correspondente com base no status
                 if status == 'sucesso':
                     array_horas_sucesso[hora] += 1  # Incrementa o índice para sucesso
@@ -156,21 +167,23 @@ def details_campaign(request, campaign_id):
                     array_horas_erro[hora] += 1  # Incrementa o índice para erro
 
         # Métricas da campanha
-        total_numbers = int(campaign_fields.get('total_numbers', 0))
-        total_success = int(campaign_fields.get('send_success', 0))
-        total_erro = int(campaign_fields.get('send_erro', 0))
-        responses = int(campaign_fields.get('responses', 0))
+        total_numbers = int(campaign_fields.get('total_numbers') if campaign_fields.get('total_numbers') else 0)
+        total_success = int(campaign_fields.get('send_success') if campaign_fields.get('send_success') else 0)
+        total_erro = int(campaign_fields.get('send_erro') if campaign_fields.get('send_erro') else 0)
+        responses = int(campaign_fields.get('responses') if campaign_fields.get('responses') else 0)
 
         # Calcula a taxa de resposta
         response_rate = (responses / total_success) * 100 if total_success > 0 else 0
 
         return render(request, 'details/details-campaign.html', {
+            'campaign': campaign_fields,
             'total_numbers': total_numbers,
             'total_success': total_success,
             "total_erro": total_erro,
             'response_rate': response_rate,
             'msg_sucess': array_horas_sucesso,
             'msg_erro': array_horas_erro,
+            'logs': logs,
         })
 
     except Exception as e:
