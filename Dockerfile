@@ -1,3 +1,4 @@
+
 # Usar a imagem do Python 3.9
 FROM python:3.10-slim
 
@@ -23,8 +24,7 @@ COPY . .
 EXPOSE 8000
 
 # Comando padrão para o Django (pode ser sobrescrito no docker-compose)
-CMD ["sh", "-c", "python manage.py collectstatic --noinput && python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:3344"]
-
+CMD ["sh", "-c", "python manage.py collectstatic --noinput && python manage.py makemigrations --noinput && python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:3344"]
 
 
 
