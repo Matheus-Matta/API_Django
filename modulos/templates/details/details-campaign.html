@@ -8,6 +8,37 @@
 <link rel="stylesheet" href="{% static 'vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css' %}" />
 
 {% endblock extra_css %} {% block content %}
+<div class="row"></div>
+    <div class="col-12 mt-2">
+        <div class="page-title-box justify-content-end d-flex align-items-center flex-lg-row flex-column">
+            <div class="p-2">
+                <form onclick="return confirm('Tem certeza que deseja encerrar esta campanha?');"
+                method="POST" action="{% url 'encerrar_campaign' campaign.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-stop-circle"></i> Encerrar Campanha
+                    </button>
+                </form>
+            </div>
+            <div class="p-2">
+                <form onclick="return confirm('Tem certeza que deseja deletar esta campanha?');"
+                method="POST" action="{% url 'delete_campaign' campaign.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash text-white"></i>
+                    </button>
+                </form>
+            </div>
+            <script>
+                function confirmDelete() {
+                    if (confirm("Tem certeza que quer fazer isso?")) {
+                        document.getElementById("deleteForm").submit();
+                    }
+                }
+            </script>
+        </div>
+    </div>
+</div>
 <div class="row row-cols-1 row-cols-xxl-4 row-cols-lg-3 row-cols-md-2 mt-2">
     <div class="col">
         <div class="card widget-icon-box">
@@ -118,15 +149,14 @@
             </div>
 
             <div class="card-body p-0">
-                <div class="table-responsive p-2 scrollbar-responsive"
-                    style="min-height: 610px; max-height: 410px; overflow-x: auto;">
+                <div class="table-responsive p-2 scrollbar-responsive" style="min-height: 610px; max-height: 410px; overflow-x: auto;">
                     <table class="table table-sm table-centered table-hover table-borderless mb-0">
                         <thead class="border-top border-bottom bg-light-subtle border-light">
                             <tr>
-                                <th>Numero</th>
+                                <th>Número</th>
                                 <th>Code</th>
                                 <th>Status</th>
-                                <th>Mensagem</th>
+                                <th style="max-width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Mensagem</th>
                                 <th>Data</th>
                             </tr>
                         </thead>
@@ -135,21 +165,20 @@
                             <tr>
                                 <td>{{ log.fields.numero }}</td>
                                 <td>{{ log.fields.code }}</td>
-                                <td
-                                    class="{% if log.fields.status == 'erro' %}text-danger{% elif log.fields.status == 'sucesso' %}text-success{% endif %}">
+                                <td class="{% if log.fields.status == 'erro' %}text-danger{% elif log.fields.status == 'sucesso' %}text-success{% endif %}">
                                     {{ log.fields.status }}
                                 </td>
-                                <td style="text-wrap: nowrap;" class="fs-8">
-                                    {{ log.fields.msg|safe|cut:'\\'|cut:'\\"'|cut:'{'|cut:'}' }}
-                                    <!-- Remove as barras e caracteres desnecessários -->
+                                <td class="fs-8" style="max-width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    {{ log.fields.msg }}
                                 </td>
-                                <td style="text-wrap: nowrap;" class="fs-8">
+                                <td class="fs-8" style="white-space: nowrap;">
                                     {{ log.fields.start_date_formatted }}
                                 </td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
+                    
                 </div> <!-- end table-responsive -->
             </div> <!-- end card-body -->
         </div> <!-- end card -->
@@ -161,6 +190,7 @@
 <script src="{% static 'vendor/daterangepicker/daterangepicker.js' %}"></script>
 
 <!-- Apex Charts js -->
+
 <script src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
 
 <!-- Vector Map js -->
@@ -221,7 +251,7 @@
     let chart_progress = null;
 
     function att_progress_bar() {
-        var progressUrl = `http://186.216.60.62:8888/api/campaigns/progress/{{ campaign.id_progress }}`;
+        var progressUrl = `http://10.0.0.73:8888/api/campaigns/progress/{{ campaign.id_progress }}`;
 
         // Fazer requisição Fetch para obter o progresso
         fetch(progressUrl)
@@ -246,7 +276,7 @@
                 // Se o gráfico já foi criado, atualiza os dados
                 if (chart_progress) {
                     chart_progress.updateSeries([progressPercent]);
-                    chart.updateOptions({
+                    chart_progress.updateOptions({
                         labels: [progressData.state]
                     });  // Atualiza o gráfico com a nova porcentagem
                 } else {
@@ -299,6 +329,7 @@
     if (status != 'finalizado') {
         setInterval(att_progress_bar, 5000);
     }
+   
 </script>
 
 {% endblock extra_js %}

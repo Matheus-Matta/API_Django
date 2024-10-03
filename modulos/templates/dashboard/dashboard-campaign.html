@@ -238,26 +238,25 @@
                 <!-- ApexCharts -->
                 <div>
                     {% for campaign in campaigns %}
-                    {% if campaign.fields.status == 'processando' %}
-                    <a style="cursor: pointer;" data-task="{{campaign.fields.id_progress}}">
+                    {% if campaign.status == 'processando' %}
+                    <a style="cursor: pointer;" data-task="{{campaign.id_progress}}">
                         <h5 class="mb-1 mt-0 fw-normal text-warning">
-                            {{ campaign.fields.name }} |
-                            <span id="progress-state-{{ campaign.fields.id_progress }}"
-                                class="badge bg-warning text-white "></span>
+                            {{ campaign.name }} |
+                            <span id="progress-state-{{ campaign.id_progress }}" class="badge bg-warning text-white "></span>
                         </h5>
                         <div class="progress-w-percent">
                             <span class="progress-value fw-bold"
-                                id="progress-value-{{ campaign.fields.id_progress }}">0%</span>
+                                id="progress-value-{{ campaign.id_progress }}">0%</span>
                             <div class="progress progress-sm">
-                                <div class="progress-bar" id="progress-bar-{{ campaign.fields.id_progress }}"
+                                <div class="progress-bar" id="progress-bar-{{ campaign.id_progress }}"
                                     role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
                                     aria-valuemax="100"></div>
                             </div>
                         </div>
                     </a>
                     <script>
-                        document.querySelector('[data-task="{{campaign.fields.id_progress}}"]').addEventListener("click", function () {
-                            window.location.href = '{% url "details_campaign" campaign.pk %}';
+                        document.querySelector('[data-task="{{campaign.id_progress}}"]').addEventListener("click", function () {
+                            window.location.href = '{% url "details_campaign" campaign.id %}';
                         });
                     </script>
                     {% endif %}
@@ -293,25 +292,25 @@
                         </thead>
                         <tbody>
                             {% for campaign in campaigns %}
-                            {% if campaign.fields.status != 'processando' %}
-                            <tr class="campaign-list-{{ campaign.pk }}" style="cursor: pointer;">
+                            {% if campaign.status != 'processando' %}
+                            <tr class="campaign-list-{{ campaign.id }}" style="cursor: pointer;">
                                 <td>
-                                    {{ campaign.fields.name }}
+                                    {{ campaign.name }}
                                 </td>
                                 <td
-                                    class="{% if campaign.fields.status == 'finalizado' %}text-success{% elif campaign.fields.status == 'cancelado' %}text-danger{% endif %}">
-                                    {{ campaign.fields.status }}
+                                    class="{% if campaign.status == 'finalizado' %}text-success{% elif campaign.status == 'cancelado' %}text-danger{% endif %}">
+                                    {{ campaign.status }}
                                 </td>
-                                <td>{{ campaign.fields.total_numbers }}</td>
-                                <td>{{ campaign.fields.send_success }}</td>
-                                <td>{{ campaign.fields.send_erro }}</td>
-                                <td>{{ campaign.fields.response_rate }}%</td>
-                                <td>{{ campaign.fields.start_date_formatted }}</td>
-                                <td>{{ campaign.fields.end_date_formatted }}</td>
+                                <td>{{ campaign.total_numbers }}</td>
+                                <td>{{ campaign.send_success }}</td>
+                                <td>{{ campaign.send_erro }}</td>
+                                <td>{{ campaign.response_rate }}%</td>
+                                <td>{{ campaign.start_date_formatted }}</td>
+                                <td>{{ campaign.end_date_formatted }}</td>
                             </tr>
                             <script>
-                                document.querySelector('.campaign-list-{{ campaign.pk }}').addEventListener("click", function () {
-                                    window.location.href = '{% url "details_campaign" campaign.pk %}';
+                                document.querySelector('.campaign-list-{{ campaign.id }}').addEventListener("click", function () {
+                                    window.location.href = '{% url "details_campaign" campaign.id %}';
                                 });
                             </script>
                             {% endif %}
@@ -360,7 +359,7 @@
 
         tasks.forEach(task => {
             var taskId = task.getAttribute('data-task');
-            var progressUrl = `http://186.216.60.62:8888/api/campaigns/progress/${taskId}`;
+            var progressUrl = `http://10.0.0.73:8888/api/campaigns/progress/${taskId}`;
 
             // Fazer requisição Fetch para obter o progresso
             fetch(progressUrl)
