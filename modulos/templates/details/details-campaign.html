@@ -251,7 +251,7 @@
     let chart_progress = null;
 
     function att_progress_bar() {
-        var progressUrl = `http://172.19.0.5:8888/api/campaigns/progress/{{ campaign.id_progress }}`;
+        var progressUrl = `https://control.star.dev.br/api/campaigns/progress/{{ campaign.id_progress }}`;
 
         // Fazer requisição Fetch para obter o progresso
         fetch(progressUrl)

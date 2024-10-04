@@ -359,7 +359,7 @@
 
         tasks.forEach(task => {
             var taskId = task.getAttribute('data-task');
-            var progressUrl = `http://172.19.0.5:8888/api/campaigns/progress/${taskId}`;
+            var progressUrl = `https://control.star.dev.br/api/campaigns/progress/${taskId}`;
 
             // Fazer requisição Fetch para obter o progresso
             fetch(progressUrl)

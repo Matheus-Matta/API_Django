@@ -25,7 +25,7 @@ def dashboard_campaign(request):
             data_fim = today.replace(day=last_day).strftime('%Y-%m-%d')
 
         # Faz a requisição para a API
-        api_url = f"http://172.19.0.5:8888/api/campaigns?dataInicio={data_inicio}&dataFim={data_fim}"
+        api_url = f"https://control.star.dev.br/api/campaigns?dataInicio={data_inicio}&dataFim={data_fim}"
         response = requests.get(api_url)
 
         # Verifica o status da resposta da API
@@ -123,7 +123,7 @@ def dashboard_campaign(request):
 def details_campaign(request, campaign_id):
     try:
         # Faz a requisição para a API
-        api_url = f"http://172.19.0.5:8888/api/campaigns/{campaign_id}"
+        api_url = f"https://control.star.dev.br/api/campaigns/{campaign_id}"
         response = requests.get(api_url)
         campaign_response = response.json()
 
@@ -208,7 +208,7 @@ def details_campaign(request, campaign_id):
 @login_required
 def encerrar_campaign(request, campaign_id):
     try:
-        api_url = f"http://172.19.0.5:8888/api/campaigns/exit/{campaign_id}"
+        api_url = f"https://control.star.dev.br/api/campaigns/exit/{campaign_id}"
         response = requests.post(api_url)
         campaign_response = response.json()
 
@@ -227,7 +227,7 @@ def encerrar_campaign(request, campaign_id):
 
 def delete_campaign(request, campaign_id):
     try:
-        api_url = f"http://172.19.0.5:8888/api/campaigns/del/{campaign_id}"
+        api_url = f"https://control.star.dev.br/api/campaigns/del/{campaign_id}"
         response = requests.post(api_url)
         campaign_response = response.json()
 
