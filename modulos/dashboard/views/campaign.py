@@ -183,7 +183,7 @@ def details_campaign(request, campaign_id):
         # Métricas da campanha
         total_numbers = int(campaign_fields.get('total_numbers', 0) or 0)  # Garante que o valor não seja None
         total_success = int(campaign_fields.get('send_success', 0) or 0)  # Mesma coisa para send_success
-        total_erro = int(campaign_fields.get('send_erro', 0) or 0)  # Mesma coisa para send_erro
+        total_erro = int(campaign_fields.get('send_error', 0) or 0)  # Mesma coisa para send_erro
 
         # Calcula a taxa de resposta com base no total de sucessos
         response_rate = (responses / total_success) * 100 if total_success > 0 else 0
