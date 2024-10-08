@@ -165,7 +165,13 @@
                             <tr>
                                 <td>{{ log.fields.numero }}</td>
                                 <td>{{ log.fields.code }}</td>
-                                <td class="{% if log.fields.status == 'erro' %}text-danger{% elif log.fields.status == 'sucesso' %}text-success{% endif %}">
+                                <td class="{% if log.fields.status == 'erro' %}
+                                            text-danger
+                                            {% elif log.fields.status == 'sucesso' %}
+                                            text-success
+                                            {% elif log.fields.status == 'response' %}
+                                            text-warning
+                                            {% endif %}">
                                     {{ log.fields.status }}
                                 </td>
                                 <td class="fs-8" style="max-width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
@@ -207,14 +213,19 @@
     // charts para grafico de msg enviadas
     let sucess_array = JSON.parse('{{ msg_sucess|safe }}');
     let erro_array = JSON.parse('{{ msg_erro|safe }}');
+    let resposta_array = JSON.parse('{{ msg_response|safe }}');
+
 
     var options = {
         series: [{
             name: "Sucesso",
             data: sucess_array.map(value => value === 0 ? null : value) // Dados da array de sucesso
-        }, {
+        },{
             name: "Erro",
             data: erro_array.map(value => value === 0 ? null : value) // Dados da array de erro
+        },{
+            name: "Respostas",
+            data: resposta_array.map(value => value === 0 ? null : value) // Dados da array de erro
         }],
         chart: {
             height: 350,
@@ -227,11 +238,11 @@
             }
         },  // Verde para sucesso, vermelho para erro
         stroke: {
-            width: [8, 8],
+            width: [8, 8, 8],
             curve: 'smooth'
         },
         labels: ['0h', '1h', '2h', '3h', '4h', '5h', '6h', '7h', '8h', '9h', '10h', '11h', '12h', '13h', '14h', '15h', '16h', '17h', '18h', '19h', '20h', '21h', '22h', '23h'],
-        colors: ['#28a745', '#dc3545'],
+        colors: ['#28a745', '#dc3545','#fec20d'],
         title: {
             text: 'Horas do Dia'
         },

@@ -94,30 +94,37 @@ def dashboard_campaign(request):
 @login_required
 def details_campaign(request, campaign_id):
     try:
+        # Faz a requisição para a API
         api_url = f"https://control.star.dev.br/api/campaigns/{campaign_id}"
         campaign_response = call_api(request, "GET", api_url)
 
         if not campaign_response:
-            print(f"[api_url] error não request sem resposta {campaign_response}")
-            return redirect('dashboard_campaign')
-
-        campaign_list = json.loads(campaign_response.get('campaign', '[]'))
-        if not campaign_list:
+            print("response não obteve dados")
             messages.error(request, "Dados da campanha não encontrados.")
             return redirect('dashboard_campaign')
 
-        campaign_obj = campaign_list[0]  # Pega o primeiro elemento da lista
-        campaign_fields = campaign_obj.get('fields', {})
-        campaign_fields['id'] = campaign_obj['pk']
+        # Extraindo os dados da campanha
+        campaign_obj = campaign_response.get('campaign', {})
+        if not campaign_obj:
+            messages.error(request, "Dados da campanha não encontrados.")
+            return redirect('dashboard_campaign')
 
-        logs_data_str = campaign_response.get('logs', '[]')
-        logs = json.loads(logs_data_str)
+        # A campanha já é um dicionário, então não é necessário o loop
+        campaign_fields = campaign_obj
+        campaign_fields['id'] = campaign_obj.get('id')
 
-        responses = campaign_response.get('responses', 0)
+        # Extraindo e convertendo os logs que estão em formato string
+        logs_str = campaign_response.get('logs', '[]')
+        try:
+            logs = json.loads(logs_str)  # Convertendo a string de logs em uma lista de dicionários
+        except json.JSONDecodeError:
+            logs = []
+            print(f"Erro ao decodificar os logs: {logs_str}")
 
         # Inicializando os arrays de contagem para cada hora do dia
-        array_horas_sucesso = [0] * 24
-        array_horas_erro = [0] * 24
+        array_horas_sucesso = [0] * 24  # Mensagens de sucesso
+        array_horas_erro = [0] * 24     # Mensagens de erro
+        array_horas_response = [0] * 24  # Respostas recebidas
 
         # Itera sobre os logs e separa os dados por hora e status
         for log in logs:
@@ -126,18 +133,30 @@ def details_campaign(request, campaign_id):
             status = fields.get('status')
 
             if criado:
-                data_criacao = datetime.strptime(criado, '%Y-%m-%dT%H:%M:%S.%f')
-                hora = data_criacao.hour
-                if status == 'sucesso':
-                    array_horas_sucesso[hora] += 1
-                elif status == 'erro':
-                    array_horas_erro[hora] += 1
+                try:
+                    # Converte a string para um objeto datetime
+                    data_criacao = datetime.strptime(criado, '%Y-%m-%dT%H:%M:%S.%f')
+                    hora = data_criacao.hour  # Obtém a hora do log
 
-        total_numbers = int(campaign_fields.get('total_numbers', 0))
-        total_success = int(campaign_fields.get('send_success', 0))
-        total_erro = int(campaign_fields.get('send_error', 0))
-        response_rate = (responses / total_success) * 100 if total_success > 0 else 0
+                    # Atualiza o array correspondente com base no status
+                    if status == 'sucesso':
+                        array_horas_sucesso[hora] += 1
+                    elif status == 'erro':
+                        array_horas_erro[hora] += 1
+                    elif status == 'response':
+                        array_horas_response[hora] += 1  # Contagem de respostas por hora
+                except ValueError as ve:
+                    print(f"Erro ao converter data: {ve}")
 
+        # Métricas da campanha
+        total_numbers = int(campaign_fields.get('total_numbers', 0) or 0)
+        total_success = int(campaign_fields.get('send_success', 0) or 0)
+        total_erro = int(campaign_fields.get('send_error', 0) or 0)
+
+        # Calcula a taxa de resposta com base no total de sucessos
+        response_rate = (int(campaign_fields.get('response_count', 0) or 0) / total_success) * 100 if total_success > 0 else 0
+
+        # Renderiza os dados para o template
         return render(request, 'details/details-campaign.html', {
             'campaign': campaign_fields,
             'total_numbers': total_numbers,
@@ -146,12 +165,13 @@ def details_campaign(request, campaign_id):
             'response_rate': f"{response_rate:.2f}",
             'msg_sucess': array_horas_sucesso,
             'msg_erro': array_horas_erro,
-            'logs': logs,
+            'msg_response': array_horas_response,
+            'logs': logs 
         })
 
     except Exception as e:
-        print(f"[details_campaign] Error: {e}")
-        messages.error(request, f"Erro ao carregar detalhes da campanha: {str(e)}")
+        print(f'[details_campaign] ERROR: {type(e).__name__} - {e}')
+        messages.error(request, f'[details_campaign] ERROR: {str(e)}')
         return redirect('dashboard_campaign')
 
 @login_required
@@ -168,6 +188,8 @@ def encerrar_campaign(request, campaign_id):
         print(f"[encerrar_campaign] Error: {e}")
         messages.error(request, f"Erro ao encerrar campanha: {str(e)}")
         return redirect('dashboard_campaign')
+
+
 
 @login_required
 def delete_campaign(request, campaign_id):
