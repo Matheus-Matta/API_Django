@@ -186,7 +186,7 @@ def details_campaign(request, campaign_id):
         total_erro = int(campaign_fields.get('send_error', 0) or 0)  # Mesma coisa para send_erro
 
         # Calcula a taxa de resposta com base no total de sucessos
-        response_rate = (responses / total_success) * 100 if total_success > 0 else 0
+        response_rate = (int(campaign_fields.get('response_count', 0) or 0) / total_success) * 100 if total_success > 0 else 0
 
         # Renderiza os dados para o template
         return render(request, 'details/details-campaign.html', {
