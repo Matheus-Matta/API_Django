@@ -98,6 +98,7 @@ def details_campaign(request, campaign_id):
         campaign_response = call_api(request, "GET", api_url)
 
         if not campaign_response:
+            print(f"[api_url] error não request sem resposta {campaign_response}")
             return redirect('dashboard_campaign')
 
         campaign_list = json.loads(campaign_response.get('campaign', '[]'))
