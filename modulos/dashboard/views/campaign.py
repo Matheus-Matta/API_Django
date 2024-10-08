@@ -46,6 +46,21 @@ def dashboard_campaign(request):
             total_erro += total_error_value
             total_responses += total_responses_value
 
+            # Formatando datas
+            start_date_str = campaign.get('start_date')
+            if start_date_str:
+                start_date_obj = datetime.strptime(start_date_str, '%Y-%m-%dT%H:%M:%S.%f')
+                campaign['start_date_formatted'] = start_date_obj.strftime('%Y-%m-%d %H:%M')
+            else:
+                campaign['start_date_formatted'] = 'N/A'
+
+            end_date_str = campaign.get('end_date')
+            if end_date_str:
+                end_date_obj = datetime.strptime(end_date_str, '%Y-%m-%dT%H:%M:%S.%f')
+                campaign['end_date_formatted'] = end_date_obj.strftime('%Y-%m-%d %H:%M')
+            else:
+                campaign['end_date_formatted'] = 'N/A'
+
             # Verifica se a campanha foi finalizada
             if campaign.get('status') == 'finalizado':
                 campaign_finaly += 1
@@ -113,6 +128,9 @@ def details_campaign(request, campaign_id):
         campaign_fields = campaign_obj
         campaign_fields['id'] = campaign_obj.get('id')
 
+        
+        
+
         # Extraindo e convertendo os logs que estão em formato string
         logs_str = campaign_response.get('logs', '[]')
         try:
@@ -131,6 +149,12 @@ def details_campaign(request, campaign_id):
             fields = log.get('fields', {})
             criado = fields.get('created_at')
             status = fields.get('status')
+            
+            # Formatando datas
+            fields_str = fields.get('created_at')
+            if fields_str :
+                fields_obj = datetime.strptime(fields_str, '%Y-%m-%dT%H:%M:%S.%f')
+                fields['created_at_formatted'] =  fields_obj.strftime('%Y-%m-%d %H:%M')
 
             if criado:
                 try:
