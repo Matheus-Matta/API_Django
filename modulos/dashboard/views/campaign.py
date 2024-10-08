@@ -24,9 +24,6 @@ def dashboard_campaign(request):
         api_url = f"https://control.star.dev.br/api/campaigns?dataInicio={data_inicio}&dataFim={data_fim}"
         campaigns_data = call_api(request, "GET", api_url)
 
-        if not campaigns_data:
-            return redirect('dashboard_campaign')
-
         # Inicializando as variáveis globais para os cálculos
         total_numbers, total_success, total_erro, total_responses = 0, 0, 0, 0
         total_numbers_now, total_success_now, total_erro_now, total_responses_now = 0, 0, 0, 0
@@ -35,10 +32,10 @@ def dashboard_campaign(request):
         # Itera sobre as campanhas e realiza os cálculos
         campaigns = campaigns_data.get('campaigns', [])
         for campaign in campaigns:
-            total_numbers_value = int(campaign.get('total_numbers', 0))
-            total_success_value = int(campaign.get('send_success', 0))
-            total_error_value = int(campaign.get('send_error', 0))
-            total_responses_value = int(campaign.get('response_count', 0))
+            total_numbers_value = int(campaign.get('total_numbers', 0)) if campaign.get('total_numbers') is not None else 0
+            total_success_value = int(campaign.get('send_success', 0)) if campaign.get('send_success') is not None else 0
+            total_error_value = int(campaign.get('send_error', 0)) if campaign.get('send_error') is not None else 0
+            total_responses_value = int(campaign.get('response_count', 0)) if campaign.get('response_count') is not None else 0
 
             # Acumula os dados globais
             total_numbers += total_numbers_value
@@ -49,15 +46,21 @@ def dashboard_campaign(request):
             # Formatando datas
             start_date_str = campaign.get('start_date')
             if start_date_str:
-                start_date_obj = datetime.strptime(start_date_str, '%Y-%m-%dT%H:%M:%S.%f')
-                campaign['start_date_formatted'] = start_date_obj.strftime('%Y-%m-%d %H:%M')
+                try:
+                    start_date_obj = datetime.strptime(start_date_str, '%Y-%m-%dT%H:%M:%S.%f')
+                    campaign['start_date_formatted'] = start_date_obj.strftime('%Y-%m-%d %H:%M')
+                except ValueError:
+                    campaign['start_date_formatted'] = 'Data inválida'
             else:
                 campaign['start_date_formatted'] = 'N/A'
 
             end_date_str = campaign.get('end_date')
             if end_date_str:
-                end_date_obj = datetime.strptime(end_date_str, '%Y-%m-%dT%H:%M:%S.%f')
-                campaign['end_date_formatted'] = end_date_obj.strftime('%Y-%m-%d %H:%M')
+                try:
+                    end_date_obj = datetime.strptime(end_date_str, '%Y-%m-%dT%H:%M:%S.%f')
+                    campaign['end_date_formatted'] = end_date_obj.strftime('%Y-%m-%d %H:%M')
+                except ValueError:
+                    campaign['end_date_formatted'] = 'Data inválida'
             else:
                 campaign['end_date_formatted'] = 'N/A'
 
@@ -104,7 +107,7 @@ def dashboard_campaign(request):
     except Exception as e:
         print(f"[dashboard_campaign] Error: {e}")
         messages.error(request, f"Erro ao carregar campanhas: {str(e)}")
-        return redirect('dashboard_campaign')
+        return redirect('index')
 
 @login_required
 def details_campaign(request, campaign_id):
@@ -149,7 +152,7 @@ def details_campaign(request, campaign_id):
             fields = log.get('fields', {})
             criado = fields.get('created_at')
             status = fields.get('status')
-            
+
             # Formatando datas
             fields_str = fields.get('created_at')
             if fields_str :
