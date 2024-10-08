@@ -3,7 +3,7 @@ from django.contrib import messages
 
 def call_api(request, method, url, data=None):
     """
-    Função genérica para realizar requisições à API.
+    Função genérica para realizar requisições à API, com tratamento de erros.
     """
     try:
         if method == "GET":
@@ -14,6 +14,7 @@ def call_api(request, method, url, data=None):
             raise ValueError("Método HTTP inválido")
 
         if response.status_code not in [200, 201]:
+            print(f"Erro na resposta da API: {response.status_code} - {response.text}")
             messages.error(request, f"Erro: {response.status_code} - {response.text}")
             return None
 
