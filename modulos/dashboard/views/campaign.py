@@ -3,12 +3,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from datetime import datetime
 from calendar import monthrange
-from .utils import call_api
+from .utils import *
 import json
 
 @login_required
 def dashboard_campaign(request):
     try:
+        # Obter os parâmetros de data da URL
         data_inicio = request.GET.get('dataInicio')
         data_fim = request.GET.get('dataFim')
 
@@ -20,14 +21,22 @@ def dashboard_campaign(request):
             last_day = monthrange(today.year, today.month)[1]
             data_fim = today.replace(day=last_day).strftime('%Y-%m-%d')
 
+        # Converter data_inicio e data_fim para objetos datetime
+        data_inicio = datetime.strptime(data_inicio, '%Y-%m-%d')
+        data_fim = datetime.strptime(data_fim, '%Y-%m-%d')
+
         # Faz a requisição para a API
-        api_url = f"https://control.star.dev.br/api/campaigns?dataInicio={data_inicio}&dataFim={data_fim}"
+        api_url = f"https://control.star.dev.br/api/campaigns?dataInicio={data_inicio.strftime('%Y-%m-%d')}&dataFim={data_fim.strftime('%Y-%m-%d')}"
         campaigns_data = call_api(request, "GET", api_url)
 
         # Inicializando as variáveis globais para os cálculos
         total_numbers, total_success, total_erro, total_responses = 0, 0, 0, 0
         total_numbers_now, total_success_now, total_erro_now, total_responses_now = 0, 0, 0, 0
         campaign_total_now, campaign_finaly, campaign_finaly_now = 0, 0, 0
+
+        ARRAY_MONTH_SUCCESS = get_days_range_array(data_inicio, data_fim)
+        ARRAY_MONTH_ERROR = get_days_range_array(data_inicio, data_fim)
+        ARRAY_MONTH_RESPONSE = get_days_range_array(data_inicio, data_fim)
 
         # Itera sobre as campanhas e realiza os cálculos
         campaigns = campaigns_data.get('campaigns', [])
@@ -48,6 +57,18 @@ def dashboard_campaign(request):
             if start_date_str:
                 try:
                     start_date_obj = datetime.strptime(start_date_str, '%Y-%m-%dT%H:%M:%S.%f')
+
+                    # Verifica se a data está dentro do intervalo de data_inicio e data_fim
+                    if data_inicio <= start_date_obj <= data_fim:
+                        # Calcula o índice correto no array com base no número de dias desde data_inicio
+                        day_index = (start_date_obj - data_inicio).days
+
+                        # Atualiza os arrays com os valores acumulados
+                        ARRAY_MONTH_SUCCESS[day_index] += total_success_value
+                        ARRAY_MONTH_ERROR[day_index] += total_error_value
+                        ARRAY_MONTH_RESPONSE[day_index] += total_responses_value
+
+                    # Formata a data para exibição
                     campaign['start_date_formatted'] = start_date_obj.strftime('%Y-%m-%d %H:%M')
                 except ValueError:
                     campaign['start_date_formatted'] = 'Data inválida'
@@ -101,7 +122,12 @@ def dashboard_campaign(request):
             'response_rate': f"{global_response_rate:.2f}",
             'response_rate_now': f"{response_rate_now:.2f}",
             'campaign_finaly': campaign_finaly,
-            'campaign_finaly_now': campaign_finaly_now
+            'campaign_finaly_now': campaign_finaly_now,
+            'msg_month': {
+                'success': ARRAY_MONTH_SUCCESS,
+                'error': ARRAY_MONTH_ERROR,
+                'response': ARRAY_MONTH_RESPONSE
+            }
         })
 
     except Exception as e:

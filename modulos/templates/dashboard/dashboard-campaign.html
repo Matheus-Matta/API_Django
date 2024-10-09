@@ -325,13 +325,23 @@
     <!-- end col -->
 </div>
 <!-- end row -->
-
-
-
+<div class="row"></div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div dir="ltr">
+                    <div id="chart_line_column_area" class="apex-charts" data-colors="#ffbc00" style="min-height: 395px;">
+                    </div>
+                </div> <!-- end card body-->
+            </div> <!-- end card -->
+        </div> <!-- end col -->
+    </div>
+    <!-- end row -->
 </div>
-<!-- end row -->
+
 
 {% endblock content %} {% block extra_js %}
+
 <!-- Daterangepicker js -->
 <script src="{% static 'vendor/daterangepicker/moment.min.js' %}"></script>
 <script src="{% static 'vendor/daterangepicker/daterangepicker.js' %}"></script>
@@ -345,8 +355,6 @@
 
 <!-- Dashboard App js -->
 <script src="{% static 'js/pages/demo.dashboard.js' %}"></script>
-
-
 
 <!-- App js -->
 <script src="{% static 'js/app.min.js' %}"></script>
@@ -399,5 +407,118 @@
     att_progress_bar();
     setInterval(att_progress_bar, 5000);
 </script>
+<script>
+    let msg_success = JSON.parse('{{ msg_month.success|safe }}');
+    let msg_error = JSON.parse('{{ msg_month.error|safe }}');
+    let msg_response = JSON.parse('{{ msg_month.response|safe }}');
+    
+    function getParameterByName(name) {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(name);
+    }
 
+    // Função para obter o primeiro dia do mês atual
+    function getFirstDayOfMonth() {
+        const now = new Date();
+        return new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0];
+    }
+
+    // Função para obter o último dia do mês atual
+    function getLastDayOfMonth() {
+        const now = new Date();
+        return new Date(now.getFullYear(), now.getMonth() + 1, 0).toISOString().split('T')[0];
+    }
+
+    // Verificar se os parâmetros 'dataInicio' e 'dataFim' estão na URL
+    const urlDataInicio = getParameterByName('dataInicio');
+    const urlDataFim = getParameterByName('dataFim');
+
+    // Se os parâmetros estiverem na URL, usá-los. Caso contrário, usar o primeiro e o último dia do mês atual.
+    const dataInicio = urlDataInicio ? new Date(urlDataInicio) : new Date(getFirstDayOfMonth());
+    const dataFim = urlDataFim ? new Date(urlDataFim) : new Date(getLastDayOfMonth());
+
+    // Criando array com os timestamps entre dataInicio e dataFim
+    const diasDoMes = [];
+    let dataAtual = new Date(dataInicio);
+
+    // Gera labels para todos os dias entre dataInicio e dataFim
+    while (dataAtual <= dataFim) {
+        diasDoMes.push(dataAtual.getTime());  // Adiciona timestamps em milissegundos
+        dataAtual.setDate(dataAtual.getDate() + 1);  // Avança para o próximo dia
+    }
+
+    console.log(diasDoMes);
+
+    var options = {
+        series: [{
+            name: 'ERROR',
+            type: 'area',
+            data: msg_error
+        }, {
+            name: 'SUCESSO',
+            type: 'area',
+            data: msg_success
+        }, {
+            name: 'RESPOSTAS',
+            type: 'area',
+            data: msg_response
+        }],
+        chart: {
+            height: 350,
+            type: 'line',
+            stacked: false,
+            toolbar: {
+                show: false
+            }
+        },
+        stroke: {
+            width: [2, 2, 2],
+            curve: 'smooth'
+        },
+        plotOptions: {
+            bar: {
+                columnWidth: '50%'
+            }
+        },
+        fill: {
+            opacity: [0.25, 0.25, 0.25],
+            gradient: {
+                inverseColors: false,
+                shade: 'light',
+                type: "vertical",
+                opacityFrom: 0.85,
+                opacityTo: 0.55,
+                stops: [0, 100, 100, 100]
+            }
+        },
+        labels: diasDoMes,
+        colors: ['#dc3545', '#28a745', '#fec20d'], // Aqui estamos usando o array de timestamps
+        markers: {
+            size: 0
+        },
+        xaxis: {
+            type: 'datetime', // Agora ele sabe que os valores são timestamps
+        },
+        yaxis: {
+            title: {
+                text: 'Points',
+            }
+        },
+        tooltip: {
+            shared: true,
+            intersect: false,
+            y: {
+                formatter: function (y) {
+                    if (typeof y !== "undefined") {
+                        return y.toFixed(0) + " msg";
+                    }
+                    return y;
+                }
+            }
+        }
+    };
+
+    var chart_line = new ApexCharts(document.querySelector("#chart_line_column_area"), options);
+    chart_line.render();
+</script>
 {% endblock extra_js %}

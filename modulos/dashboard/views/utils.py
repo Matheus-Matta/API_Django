@@ -1,5 +1,7 @@
 import requests
 from django.contrib import messages
+from django.utils import timezone
+import calendar
 
 def call_api(request, method, url, data=None):
     """
@@ -24,3 +26,8 @@ def call_api(request, method, url, data=None):
         print(f"[call_api] Error: {e}")
         messages.error(request, f"Erro ao tentar acessar a API: {str(e)}")
         return None
+    
+def get_days_range_array(dataInicio, dataFim):
+    delta = (dataFim - dataInicio).days + 1
+    array = [0] * delta
+    return array
