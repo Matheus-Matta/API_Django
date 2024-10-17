@@ -1,5 +1,8 @@
 {% extends "partials/base.html" %} {% load static %}
-{% block title %}Campaign{% endblock title %} {% block extra_css %}
+
+{% block title %}Campaign{% endblock title %}
+
+{% block extra_css %}
 
 <!-- Daterangepicker css -->
 <link rel="stylesheet" href="{% static 'vendor/daterangepicker/daterangepicker.css' %}" />
@@ -7,11 +10,17 @@
 <!-- Vector Map css -->
 <link rel="stylesheet" href="{% static 'vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css' %}" />
 
-{% endblock extra_css %} {% block content %}
+{% endblock extra_css %}
+
+{% block pagetitle %}
+{% include "partials/page-title.html" with pagehome='dashboard' title="Campaign" %}
+{% endblock pagetitle %}
+
+{% block content %}
+
 <div class="row">
     <div class="col-12">
-        <div class="page-title-box justify-content-between d-flex align-items-lg-center flex-lg-row flex-column">
-            <h4 class="page-title">Dashboard</h4>
+        <div class="page-title-box justify-content-end d-flex align-items-lg-center flex-lg-row flex-column mb-2">
             <form class="d-flex mb-xxl-0 mb-2">
                 <div class="d-flex align-items-center">
                     <label class="m-2" for="dataInicio">Início:</label>
@@ -30,12 +39,10 @@
                             <i class="ri-calendar-todo-fill fs-13"></i>
                         </span>
                     </div>
-
                     <a href="javascript:void(0);" class="btn btn-primary ms-2" onclick="refreshDashboard()">
                         <i class="ri-refresh-line"></i>
                     </a>
                 </div>
-
             </form>
         </div>
     </div>
@@ -241,26 +248,26 @@
                     {% if campaign.status == 'processando' %}
                     <a style="cursor: pointer;" data-task="{{campaign.id_progress}}">
                         <h5 class="mb-1 mt-0 fw-normal text-warning">
-                            {{ campaign.name }} |
-                            <span id="progress-state-{{ campaign.id_progress }}" class="badge bg-warning text-white "></span>
+                                {{ campaign.name }} |
+                                <span id="progress-state-{{ campaign.id_progress }}" class="badge bg-warning text-white "></span>
                         </h5>
-                        <div class="progress-w-percent">
-                            <span style="text-wrap: nowrap;" class="progress-value fw-bold"
-                                id="progress-value-{{ campaign.id_progress }}">0%</span>
-                            <div class="progress progress-sm">
-                                <div class="progress-bar" id="progress-bar-{{ campaign.id_progress }}"
-                                    role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
-                                    aria-valuemax="100"></div>
+                            <div class="progress-w-percent">
+                                <span style="text-wrap: nowrap;" class="progress-value fw-bold"
+                                    id="progress-value-{{ campaign.id_progress }}">0%</span>
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar" id="progress-bar-{{ campaign.id_progress }}"
+                                        role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
+                                        aria-valuemax="100"></div>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    <script>
-                        document.querySelector('[data-task="{{campaign.id_progress}}"]').addEventListener("click", function () {
-                            window.location.href = '{% url "details_campaign" campaign.id %}';
-                        });
-                    </script>
-                    {% endif %}
-                    {% endfor %}
+                        </a>
+                        <script>
+                            document.querySelector('[data-task="{{campaign.id_progress}}"]').addEventListener("click", function () {
+                                window.location.href = '{% url "details_campaign" campaign.id %}';
+                            });
+                        </script>
+                        {% endif %}
+                        {% endfor %}
                 </div>
             </div>
         </div> <!-- end card-->

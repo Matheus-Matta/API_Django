@@ -1,6 +1,6 @@
 {% load static %}
 <!-- ========== Left Sidebar Start ========== -->
-<div style="left: 0;" class="leftside-menu">
+<div style="left: 5px;" class="leftside-menu">
 
   <!-- Brand Logo Light -->
   <a href="/" class="logo logo-light">
@@ -38,22 +38,336 @@
     <!--- Sidemenu -->
     <ul class="side-nav">
 
-      <li class="side-nav-title mt-1"> Main</li>
+      <li class="side-nav-title mt-1">conteudo</li>
 
       <li class="side-nav-item">
-        <a data-bs-toggle="collapse" href="#sidebarDashboard" aria-expanded="false" aria-controls="sidebarDashboard"
+        <a data-bs-toggle="collapse" href="#sidebarCommerce" aria-expanded="false" aria-controls="sidebarCommerce"
           class="side-nav-link">
-          <i class="ri-dashboard-2-fill"></i>
-          <span> Dashboard </span>
+          <i class="ri-store-2-line"></i>
+          <span> E-Commerce </span>
           <span class="menu-arrow"></span>
         </a>
-        <div class="collapse" id="sidebarDashboard">
+        <div class="collapse" id="sidebarCommerce">
           <ul class="side-nav-second-level">
             <li>
-              <a href="#">Cast</a>
+              <a href="#">dashboard</a>
             </li>
             <li>
-              <a href="{% url 'dashboard_campaign' %}">Campaign</a>
+              <a href="#">Pedidos</a>
+            </li>
+            <li>
+              <a href="#">Produtos</a>
+            </li>
+            <li>
+              <a href="#">Cupons</a>
+            </li>
+            <li>
+              <a href="#">Comentarios</a>
+            </li>
+            <li>
+              <a href="#">Templete</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="side-nav-item">
+        <a data-bs-toggle="collapse" href="#sidebarMarketplace" aria-expanded="false" aria-controls="sidebarMarketplace"
+          class="side-nav-link">
+          <i class="ri-store-3-line"></i>
+          <span> Marketplace </span>
+          <span class="menu-arrow"></span>
+        </a>
+        <div class="collapse" id="sidebarMarketplace">
+          <ul class="side-nav-second-level">
+            <li>
+              <a href="#">dashboard</a>
+            </li>
+            <li>
+              <a href="#">Pedidos</a>
+            </li>
+            <li>
+              <a href="#">Produtos</a>
+            </li>
+            <li>
+              <a href="#">Integração</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="side-nav-item">
+        <a data-bs-toggle="collapse" href="#sidebarLojas" aria-expanded="false" aria-controls="sidebarLojas"
+          class="side-nav-link">
+          <i class="bi bi-shop"></i>
+          <span> Lojas </span>
+          <span class="menu-arrow"></span>
+        </a>
+        <div class="collapse" id="sidebarLojas">
+          <ul class="side-nav-second-level">
+            <li>
+              <a href="#">dashboard</a>
+            </li>
+            <li>
+              <a href="#">Cadastro</a>
+            </li>
+            <li>
+              <a href="#">Pedidos</a>
+            </li>
+            <li>
+              <a href="#">Lista</a>
+            </li>
+            <li>
+              <a href="#">Produtos</a>
+            </li>
+            <li>
+              <a href="#">Estoque</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="side-nav-item">
+        <a data-bs-toggle="collapse" href="#sidebarProdutos" aria-expanded="false" aria-controls="sidebarProdutos"
+          class="side-nav-link">
+          <i class="ri-box-3-line"></i>
+          <span> Produtos </span>
+          <span class="menu-arrow"></span>
+        </a>
+        <div class="collapse" id="sidebarProdutos">
+          <ul class="side-nav-second-level">
+            <li>
+              <a href="#">dashboard</a>
+            </li>
+            <li>
+              <a href="#">Cadastro</a>
+            </li>
+            <li>
+              <a href="#">Lista</a>
+            </li>
+            <li>
+              <a href="#">Desconto</a>
+            </li>
+            <li>
+              <a href="#">Categorias</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="side-nav-item">
+        <a data-bs-toggle="collapse" href="#sidebarAssistencia" aria-expanded="false" aria-controls="sidebarAssistencia"
+          class="side-nav-link">
+          <i class="bi bi-screwdriver"></i>
+          <span> Assistencia </span>
+          <span class="menu-arrow"></span>
+        </a>
+        <div class="collapse" id="sidebarAssistencia">
+          <ul class="side-nav-second-level">
+            <li>
+              <a href="#">dashboard</a>
+            </li>
+            <li>
+              <a href="#">Registro</a>
+            </li>
+            <li>
+              <a href="#">Lista</a>
+            </li>
+            <li>
+              <a href="#">Peças</a>
+            </li>
+            <li>
+              <a href="#">Categorias</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="side-nav-item">
+        <a data-bs-toggle="collapse" href="#sidebarMontagem" aria-expanded="false" aria-controls="sidebarMontagem"
+          class="side-nav-link">
+          <i class="bi bi-tools"></i>
+          <span> Montagem </span>
+          <span class="menu-arrow"></span>
+        </a>
+        <div class="collapse" id="sidebarMontagem">
+          <ul class="side-nav-second-level">
+            <li>
+              <a href="#">dashboard</a>
+            </li>
+            <li>
+              <a href="#">Pimes</a>
+            </li>
+            <li>
+              <a href="#">Montadores</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      
+      <li class="side-nav-item">
+        <a data-bs-toggle="collapse" href="#sidebarPedidos" aria-expanded="false" aria-controls="sidebarPedidos"
+          class="side-nav-link">
+          <i class="ri-shopping-bag-3-line"></i>
+          <span> Pedidos </span>
+          <span class="menu-arrow"></span>
+        </a>
+        <div class="collapse" id="sidebarPedidos">
+          <ul class="side-nav-second-level">
+            <li>
+              <a href="#">dashboard</a>
+            </li>
+            <li>
+              <a href="#">Cadastro</a>
+            </li>
+            <li>
+              <a href="#">Ordens</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="side-nav-item">
+        <a data-bs-toggle="collapse" href="#sidebarEntrega" aria-expanded="false" aria-controls="sidebarEntrega"
+          class="side-nav-link">
+          <i class="ri-truck-line"></i>
+          <span> Entrega </span>
+          <span class="menu-arrow"></span>
+        </a>
+        <div class="collapse" id="sidebarEntrega">
+          <ul class="side-nav-second-level">
+            <li>
+              <a href="#">dashboard</a>
+            </li>
+            <li>
+              <a href="#">Saidas</a>
+            </li>
+            <li>
+              <a href="#">Entradas</a>
+            </li>
+            <li>
+              <a href="#">Fretes</a>
+            </li>
+            <li>
+              <a href="#">Motoristas</a>
+            </li>
+            <li>
+              <a href="#">Veiculos</a>
+            </li>
+            <li>
+              <a href="#">Box</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="side-nav-item">
+        <a data-bs-toggle="collapse" href="#sidebarClientes" aria-expanded="false" aria-controls="sidebarClientes"
+          class="side-nav-link">
+          <i class="ri-account-circle-line"></i>
+          <span> Clientes </span>
+          <span class="menu-arrow"></span>
+        </a>
+        <div class="collapse" id="sidebarClientes">
+          <ul class="side-nav-second-level">
+            <li>
+              <a href="#">dashboard</a>
+            </li>
+            <li>
+              <a href="#">Cadastro</a>
+            </li>
+            <li>
+              <a href="#">Lista</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+ 
+      <li class="side-nav-item">
+        <a data-bs-toggle="collapse" href="#sidebarFuncionarios" aria-expanded="false" aria-controls="sidebarFuncionarios"
+          class="side-nav-link">
+          <i class="bi bi-person-rolodex"></i>
+          <span> Funcionarios </span>
+          <span class="menu-arrow"></span>
+        </a>
+        <div class="collapse" id="sidebarFuncionarios">
+          <ul class="side-nav-second-level">
+            <li>
+              <a href="#">dashboard</a>
+            </li>
+            <li>
+              <a href="#">Cadastro</a>
+            </li>
+            <li>
+              <a href="#">Lista</a>
+            </li>
+            <li>
+              <a href="#">Cargos</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="side-nav-item">
+        <a data-bs-toggle="collapse" href="#sidebarCampanha" aria-expanded="false" aria-controls="sidebarCampanha"
+          class="side-nav-link">
+          <i class="bi bi-graph-up-arrow"></i>
+          <span> Campanha </span>
+          <span class="menu-arrow"></span>
+        </a>
+        <div class="collapse" id="sidebarCampanha">
+          <ul class="side-nav-second-level">
+            <li>
+              <a href="{% url 'dashboard_campaign' %}">dashboard</a>
+            </li>
+            <li>
+              <a href="#">Painel</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="side-nav-item">
+        <a data-bs-toggle="collapse" href="#sidebarCRM" aria-expanded="false" aria-controls="sidebarCRM"
+          class="side-nav-link">
+          <i class="ri-chat-1-line"></i>
+          <span> CRM </span>
+          <span class="menu-arrow"></span>
+        </a>
+        <div class="collapse" id="sidebarCRM">
+          <ul class="side-nav-second-level">
+            <li>
+              <a href="#">dashboard</a>
+            </li>
+            <li>
+              <a href="#">Chat</a>
+            </li>
+            <li>
+              <a href="#">Protocolos</a>
+            </li>
+            <li>
+              <a href="#">Contatos</a>
+            </li>
+            <li>
+              <a href="#">Atendentes</a>
+            </li>
+            <li>
+              <a href="#">Times</a>
+            </li>
+            <li>
+              <a href="#">Etiquetas</a>
+            </li>
+            <li>
+              <a href="#">Atalhos</a>
+            </li>
+            <li>
+              <a href="#">Automação</a>
+            </li>
+            <li>
+              <a href="#">Caixa de Entrada</a>
+            </li>
+            <li>
+              <a href="#">Configuração</a>
             </li>
           </ul>
         </div>
@@ -66,70 +380,20 @@
         </a>
       </li>
 
+      <li class="side-nav-item">
+        <a href="#" class="side-nav-link">
+          <i class="ri-mail-fill"></i>
+          <span> Email </span>
+        </a>
+      </li>
 
       <li class="side-nav-item">
         <a href="#" class="side-nav-link">
-          <i class="ri-chat-voice-fill"></i>
-          <span> Chat </span>
-        </a>
-      </li>
-
-      <li class="side-nav-item">
-        <a data-bs-toggle="collapse" href="#sidebarEmail" aria-expanded="false" aria-controls="sidebarEmail"
-          class="side-nav-link">
-          <i class="ri-mail-fill"></i>
-          <span> Email </span>
-          <span class="menu-arrow"></span>
-        </a>
-        <div class="collapse" id="sidebarEmail">
-          <ul class="side-nav-second-level">
-            <li>
-              <a href="#">Inbox</a>
-            </li>
-            <li>
-              <a href="#">Read Email</a>
-            </li>
-          </ul>
-        </div>
-      </li>
-
-      <li class="side-nav-item">
-        <a data-bs-toggle="collapse" href="#sidebarTasks" aria-expanded="false" aria-controls="sidebarTasks"
-          class="side-nav-link">
           <i class="ri-list-check-3"></i>
           <span> Tasks </span>
-          <span class="menu-arrow"></span>
         </a>
-        <div class="collapse" id="sidebarTasks">
-          <ul class="side-nav-second-level">
-            <li>
-              <a href="#">List</a>
-            </li>
-            <li>
-              <a href="#">Details</a>
-            </li>
-          </ul>
-        </div>
       </li>
 
-            <li class="side-nav-item">
-              <a href="#" class="side-nav-link">
-                <i class="ri-clipboard-fill"></i>
-                <span> Kanban Board </span>
-              </a>
-            </li>
-
-            <li class="side-nav-item">
-              <a href="#" class="side-nav-link">
-                <i class="ri-folder-4-fill"></i>
-                  <span class="badge bg-purple float-end">1 File</span>
-                  <span> File Manager </span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </li>
-    </ul>
     <!--- End Sidemenu -->
 
     <div class="clearfix"></div>

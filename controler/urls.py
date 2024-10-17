@@ -22,6 +22,7 @@ from .views import index_view
 
 urlpatterns = [
     path('', index_view, name='index'),
+    path('dashboard', index_view, name='dashboard'),
     
     path('', include('modulos.api.urls')),
     path('', include('modulos.login.urls')),

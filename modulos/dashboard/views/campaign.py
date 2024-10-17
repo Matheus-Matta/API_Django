@@ -202,12 +202,14 @@ def details_campaign(request, campaign_id):
                     print(f"Erro ao converter data: {ve}")
 
         # Métricas da campanha
+        print(campaign_fields)
         total_numbers = int(campaign_fields.get('total_numbers', 0) or 0)
         total_success = int(campaign_fields.get('send_success', 0) or 0)
         total_erro = int(campaign_fields.get('send_error', 0) or 0)
 
         # Calcula a taxa de resposta com base no total de sucessos
-        response_rate = (int(campaign_fields.get('response_count', 0) or 0) / total_success) * 100 if total_success > 0 else 0
+        response_count = int(campaign_fields.get('response_count', 0))
+        response_rate = (response_count / total_success) * 100 if total_success > 0 else 0
 
         # Renderiza os dados para o template
         return render(request, 'details/details-campaign.html', {
@@ -216,6 +218,7 @@ def details_campaign(request, campaign_id):
             'total_success': total_success,
             "total_erro": total_erro,
             'response_rate': f"{response_rate:.2f}",
+            'response_count': response_count,
             'msg_sucess': array_horas_sucesso,
             'msg_erro': array_horas_erro,
             'msg_response': array_horas_response,
